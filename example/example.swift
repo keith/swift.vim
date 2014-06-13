@@ -124,3 +124,33 @@ enum Card : Int {
     case Diamond
     case Club
 }
+
+struct foo : bar {
+    switch (foo) {
+    case foo:
+    case bar:
+    default:
+        stuff
+    case baz:
+        fuck
+    case bar:
+        bafsd
+    }
+
+    func foo() {
+
+    }
+
+    func bar(asdf: String) -> Bool {
+
+    }
+
+    func baz() -> (Foo, Bar)
+    {
+
+    }
+
+    func asdf<T>() {
+
+    }
+}
