@@ -21,3 +21,68 @@ comment
 /* TODO multiple */
 
 // MARK: this is a marker
+
+5 // int
+
+5.5 // float
+5.5abc5.5 // broken
+
+0xa2ef // hex
+0x213zdf // broken hex
+
+0b10101 // binary
+0b1234 // broken binary
+
+0o567 // octal
+0o5689 // broken octal
+
+// Operators
+~
+!
+%
+^
+&
+*
+-
++
+=
+|
+2 / 5
+.
+>
+<
+
+!=
+!=
+!==
+!==
+%=
+&%
+&&
+&&=
+let a = 10 &* 20
+&+
+&-
+8 &/ 20
+&=
+let a *= 20
+++
++=
+--
+-=
+..
+...
+let b = 50 /= 20
+<<
+<=
+=<<
+==
+===
+>=
+>>
+>>=
+^=
+|=
+||
+||=
+~=
