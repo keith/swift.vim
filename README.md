@@ -16,3 +16,9 @@ Plugin 'Keithbsmiley/swift.vim'
 cd ~/.vim/bundle
 git clone https://github.com/Keithbsmiley/swift.vim.git
 ```
+
+### Development
+
+I plan to continuing improving this plugin as I find more issues with
+it. If you find anything strange with highlighting or indention *please*
+[submit an issue](https://github.com/Keithbsmiley/swift.vim/issues/new).
