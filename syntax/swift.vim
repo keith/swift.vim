@@ -110,7 +110,8 @@ syntax keyword swiftStructure
       \ enum
 
 syntax region swiftTypeWrapper start="\v:\s*" end="\v[^\w]" contains=swiftType transparent oneline
-syntax region swiftLiteralWrapper start="\v\=\s*" end="\v(\[\]|\(\))" contains=swiftLiteralType transparent oneline
+syntax region swiftLiteralWrapper start="\v\=\s*" end="\v(\[\]|\(\))" contains=swiftType transparent oneline
+syntax region swiftReturnWrapper start="\v-\>\s*" end="\v(\{|$)" contains=swiftType transparent oneline
 syntax match swiftType "\v\w+" contained containedin=swiftTypeWrapper,swiftLiteralWrapper
 
 syntax keyword swiftImports import
