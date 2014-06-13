@@ -3,7 +3,7 @@
 " Description: Runtime files for Swift
 " Last Modified: June 13, 2014
 
-if exists("b:current_syntax") && b:current_syntax == "swift"
+if exists("b:current_syntax")
   finish
 endif
 
@@ -23,6 +23,4 @@ highlight default link swiftString String
 highlight default link swiftShebang Comment
 highlight default link swiftComment Comment
 
-if !exists("b:current_syntax")
-  let b:current_syntax = "swift"
-endif
+let b:current_syntax = "swift"
