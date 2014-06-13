@@ -86,3 +86,41 @@ let b = 50 /= 20
 ||
 ||=
 ~=
+
+true
+false
+
+class Shape : NSObject {
+    var foo: String
+    var qux: String = "abcd"
+    let bar = String?[]()
+    let baz = String()?
+    let foo = Int()
+
+    init(thing: String) {
+        foo = thing
+        super.init(thing)
+        let bar:String= "123"
+    }
+
+    func foo(thing1 : String, 2thing : Int52) {
+
+    }
+
+    func bar(thing: String?){
+
+    }
+}
+
+import Cocoa
+
+struct Thing: NSString {
+    var foo : Int
+}
+
+enum Card : Int {
+    case Spade = 1
+    case Heart
+    case Diamond
+    case Club
+}
