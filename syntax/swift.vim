@@ -10,17 +10,25 @@ endif
 " Shebang
 syntax match swiftShebang /#!.*$/
 
+" Comment contained keywords
+syntax keyword swiftTodos contained TODO XXX FIXME NOTE
+syntax keyword swiftMarker contained MARK
+
 " Comments
 syntax match swiftComment /\/\/.*$/
+      \ contains=swiftTodos,swiftMarker
 syntax region swiftComment start=/\/\*/ end=/\*\//
+      \ contains=swiftTodos,swiftMarker
 
 " Literals
 syntax region swiftString start=/"/ skip=/\\"/ end=/"/
 
 
 " Set highlights
+highlight default link swiftTodos TODO
 highlight default link swiftString String
 highlight default link swiftShebang Comment
 highlight default link swiftComment Comment
+highlight default link swiftMarker Comment
 
 let b:current_syntax = "swift"
