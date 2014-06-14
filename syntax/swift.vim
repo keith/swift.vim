@@ -43,7 +43,7 @@ syntax keyword swiftBoolean
 
 " Operators
 syntax match swiftOperator "\v\~"
-syntax match swiftOperator "\v!"
+syntax match swiftOperator "\v\s+!"
 syntax match swiftOperator "\v\%"
 syntax match swiftOperator "\v\^"
 syntax match swiftOperator "\v\&"

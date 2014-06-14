@@ -52,10 +52,10 @@ comment
 >
 <
 
-!=
-!=
-!==
-!==
+a != b
+a != b
+a !== b
+a !== b
 %=
 &%
 &&
@@ -101,6 +101,8 @@ class Shape : NSObject {
         foo = thing
         super.init(thing)
         let bar:String= "123"
+
+        bar!
     }
 
     func foo(thing1 : String, 2thing : Int52) {
