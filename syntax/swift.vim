@@ -24,8 +24,9 @@ syntax region swiftComment start=/\/\*/ end=/\*\//
 
 " Literals
 " Strings
-syntax region swiftString start=/"/ skip=/\\"/ end=/"/ oneline contains=swiftInterpolatedString
-syntax match swiftInterpolatedString "\v\\\(\w+\)" contained containedin=swiftString
+syntax region swiftString start=/"/ skip=/\\"/ end=/"/ oneline contains=swiftInterpolatedWrapper
+syntax region swiftInterpolatedWrapper start="\v\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString
+syntax match swiftInterpolatedString "\v\w+" contained containedin=swiftInterpolatedWrapper
 
 " Numbers
 syntax match swiftNumber /\<\d\+\>/
@@ -126,6 +127,7 @@ highlight default link swiftComment Comment
 highlight default link swiftMarker Comment
 
 highlight default link swiftString String
+highlight default link swiftInterpolatedWrapper Delimiter
 highlight default link swiftNumber Number
 highlight default link swiftBoolean Boolean
 
