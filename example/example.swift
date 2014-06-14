@@ -154,3 +154,24 @@ struct foo : bar {
 
     }
 }
+
+struct ArgumentList {
+    var arguments: String[]
+
+    init(argv: UnsafePointer<CString>, count: CInt) {
+    }
+}
+
+let a : UnsafePointer<CString>
+
+func foo<T: Sequence>() {
+
+}
+
+init(argv: UnsafePointer<CString>, count: CInt) {
+    for i in 1..count {
+        let index = Int(i);
+        let arg = String.fromCString(argv[index])
+        arguments.append(arg)
+    }
+}
