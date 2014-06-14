@@ -24,7 +24,8 @@ syntax region swiftComment start=/\/\*/ end=/\*\//
 
 " Literals
 " Strings
-syntax region swiftString start=/"/ skip=/\\"/ end=/"/ oneline
+syntax region swiftString start=/"/ skip=/\\"/ end=/"/ oneline contains=swiftInterpolatedString
+syntax match swiftInterpolatedString "\v\\\(\w+\)" contained containedin=swiftString
 
 " Numbers
 syntax match swiftNumber /\<\d\+\>/
