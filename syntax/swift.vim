@@ -94,6 +94,7 @@ syntax keyword swiftKeywords
       \ self
       \ set
       \ static
+      \ subscript
       \ super
       \ switch
       \ typealias
