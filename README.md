@@ -2,6 +2,11 @@
 
 Syntax and indent files for [Swift](https://developer.apple.com/swift/)
 
+## Examples
+
+![](https://raw.githubusercontent.com/Keithbsmiley/swift.vim/master/screenshots/screen.png)
+![](https://raw.githubusercontent.com/Keithbsmiley/swift.vim/master/screenshots/screen2.png)
+
 ## Installation
 
 ### With [Vundle](https://github.com/gmarik/vundle)
