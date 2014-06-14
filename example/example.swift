@@ -175,3 +175,7 @@ init(argv: UnsafePointer<CString>, count: CInt) {
         arguments.append(arg)
     }
 }
+
+func simpleDescription() -> String {
+    return "A shape with \(numberOfSides) sides."
+}
