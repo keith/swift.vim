@@ -22,6 +22,10 @@ function! SwiftIndent()
     return indent(previousNum) + &tabstop
   endif
 
+  if previous =~ "[" && line !~ "]" && line !~ ":$"
+    return indent(previousNum) + &tabstop
+  endif
+
   if previous =~ ":$" && line !~ ":$"
     return indent(previousNum) + &tabstop
   endif
