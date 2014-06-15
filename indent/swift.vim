@@ -34,6 +34,20 @@ function! SwiftIndent()
     return indent(v:lnum) - &tabstop
   endif
 
+  let thisColon = match(line, ":")
+  if thisColon > 0
+    let prevColon = match(previous, ":")
+    if prevColon > 0
+      let minInd = &tabstop + indent(v:lnum)
+      let alignedInd = indent(previousNum) + prevColon - thisColon
+      if alignedInd < 0
+        return indent(previousNum) + &tabstop
+      else
+        return alignedInd
+      endif
+    endif
+  endif
+
   return indent(previousNum)
 endfunction
 
