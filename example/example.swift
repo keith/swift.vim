@@ -184,7 +184,10 @@ func simpleDescription() -> String {
 
 let library = [
     Movie(name: "foo bar",
-    director: "someone")
+        dfasdfsdfdirector: "someone",
+                      foo: "bar",
+                  bazzzer: "qux",
 ]
+
 
 foo as? String
