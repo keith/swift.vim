@@ -181,3 +181,10 @@ init(argv: UnsafePointer<CString>, count: CInt) {
 func simpleDescription() -> String {
     return "A shape with \(numberOfSides) sides."
 }
+
+let library = [
+    Movie(name: "foo bar",
+    director: "someone")
+]
+
+foo as? String
