@@ -19,7 +19,7 @@ syntax keyword swiftMarker contained MARK
 syntax match swiftComment /\/\/.*$/
       \ contains=swiftTodos,swiftMarker
 syntax region swiftComment start=/\/\*/ end=/\*\//
-      \ contains=swiftTodos,swiftMarker
+      \ contains=swiftTodos,swiftMarker,swiftComment
 
 
 " Literals
