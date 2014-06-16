@@ -193,3 +193,12 @@ let library = [
 
 
 foo as? String
+
+
+class MainViewController: UIViewController, UITableViewDataSource {}
+
+@IBAction func changePostFilter(sender: UISegmentedControl) {}
+override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject) {}
+override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {}
+override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
+@lazy var foo : String
