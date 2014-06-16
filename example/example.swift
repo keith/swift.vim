@@ -8,6 +8,8 @@ let foo = 5 // another comment
 
 /* this is
 a multi-line
+/* you know */
+
 comment
 */
 
@@ -186,7 +188,7 @@ let library = [
     Movie(name: "foo bar",
         dfasdfsdfdirector: "someone",
                       foo: "bar",
-                  bazzzer: "qux",
+                  bazzzer: "qux")
 ]
 
 
