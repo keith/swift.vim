@@ -108,6 +108,27 @@ syntax keyword swiftKeywords
       \ willSet
 " }}}
 
+syntax keyword swiftAttributes
+      \ @assignment
+      \ @auto_closure
+      \ @class_protocol
+      \ @exported
+      \ @final
+      \ @IBAction
+      \ @IBDesignable
+      \ @IBInspectable
+      \ @IBOutlet
+      \ @infix
+      \ @lazy
+      \ @noreturn
+      \ @NSCopying
+      \ @NSManaged
+      \ @objc
+      \ @optional
+      \ @postfix
+      \ @prefix
+      \ @required
+
 syntax keyword swiftStructure
       \ struct
       \ enum
@@ -134,6 +155,7 @@ highlight default link swiftBoolean Boolean
 
 highlight default link swiftOperator Operator
 highlight default link swiftKeywords Keyword
+highlight default link swiftAttributes PreProc
 highlight default link swiftStructure Structure
 highlight default link swiftType Type
 highlight default link swiftImports Include
