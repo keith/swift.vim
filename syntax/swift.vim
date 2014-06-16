@@ -1,7 +1,7 @@
 " File: swift.vim
 " Author: Keith Smiley
 " Description: Runtime files for Swift
-" Last Modified: June 13, 2014
+" Last Modified: June 15, 2014
 
 if exists("b:current_syntax")
   finish
@@ -9,16 +9,16 @@ endif
 
 " Comments
 " Shebang
-syntax match swiftShebang /#!.*$/
+syntax match swiftShebang "\v#!.*$"
 
 " Comment contained keywords
 syntax keyword swiftTodos contained TODO XXX FIXME NOTE
 syntax keyword swiftMarker contained MARK
 
 " Comment patterns
-syntax match swiftComment /\/\/.*$/
-      \ contains=swiftTodos,swiftMarker
-syntax region swiftComment start=/\/\*/ end=/\*\//
+syntax match swiftComment "\v\/\/.*$"
+      \ contains=swiftTodos,swiftMarker oneline
+syntax region swiftComment start="\v\/\*" end="\v\*\/"
       \ contains=swiftTodos,swiftMarker,swiftComment
 
 
