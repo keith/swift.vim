@@ -181,7 +181,7 @@ init(argv: UnsafePointer<CString>, count: CInt) {
 }
 
 func simpleDescription() -> String {
-    return "A shape with \(numberOfSides) sides."
+    return "A shape with \(numberOfSides.toRaw()) sides."
 }
 
 let library = [
