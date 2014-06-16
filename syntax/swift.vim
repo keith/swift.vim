@@ -26,7 +26,7 @@ syntax region swiftComment start="\v\/\*" end="\v\*\/"
 " Strings
 syntax region swiftString start=/"/ skip=/\\"/ end=/"/ oneline contains=swiftInterpolatedWrapper
 syntax region swiftInterpolatedWrapper start="\v\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString
-syntax match swiftInterpolatedString "\v\w+" contained containedin=swiftInterpolatedWrapper
+syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper
 
 " Numbers
 syntax match swiftNumber /\<\d\+\>/
@@ -135,7 +135,7 @@ syntax keyword swiftStructure
 
 syntax region swiftTypeWrapper start="\v:\s*" end="\v[^\w]" contains=swiftString,swiftType,swiftGenericsWrapper transparent oneline
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
-syntax region swiftLiteralWrapper start="\v\=\s*" end="\v(\[\]|\(\))" contains=swiftType transparent oneline
+syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=swiftType transparent oneline
 syntax region swiftReturnWrapper start="\v-\>\s*" end="\v(\{|$)" contains=swiftType transparent oneline
 syntax match swiftType "\v\w+" contained containedin=swiftGenericsWrapper,swiftTypeWrapper,swiftLiteralWrapper,swiftGenericsWrapper
 
