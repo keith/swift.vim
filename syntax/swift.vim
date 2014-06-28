@@ -29,11 +29,12 @@ syntax region swiftInterpolatedWrapper start="\v\\\(\s*" end="\v\s*\)" contained
 syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper
 
 " Numbers
-syntax match swiftNumber /\<\d\+\>/
-syntax match swiftNumber /\<\d\+\.\d\+\>/
-syntax match swiftNumber /\<0x\x\+\>/
-syntax match swiftNumber /\<0b[01]\+\>/
-syntax match swiftNumber /\<0o\o\+\>/
+syntax match swiftNumber "\v<\d+>"
+syntax match swiftNumber "\v<\d+\.\d+>"
+syntax match swiftNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
+syntax match swiftNumber "\v<0x\x+([Pp]-?)?\x+>"
+syntax match swiftNumber "\v<0b[01]+>"
+syntax match swiftNumber "\v<0o\o+>"
 
 " BOOLs
 syntax keyword swiftBoolean

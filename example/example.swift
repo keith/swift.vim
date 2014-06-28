@@ -27,9 +27,17 @@ comment
 5 // int
 
 5.5 // float
+5e-2
+5E2
+5.5E-2
+5.5e2
+5.5f2
 5.5abc5.5 // broken
 
 0xa2ef // hex
+0x123P432
+0x13p-43
+0x13r-43
 0x213zdf // broken hex
 
 0b10101 // binary
