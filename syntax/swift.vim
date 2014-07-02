@@ -66,6 +66,7 @@ syntax keyword swiftKeywords
       \ case
       \ class
       \ continue
+      \ convenience
       \ default
       \ deinit
       \ didSet
