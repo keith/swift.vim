@@ -147,6 +147,14 @@ syntax match swiftType "\v\w+" contained containedin=swiftGenericsWrapper,swiftT
 syntax keyword swiftImports import
 
 
+" 'preprocesor' stuff
+syntax keyword swiftPreprocessor
+      \ #if
+      \ #elseif
+      \ #else
+      \ #endif
+
+
 " Set highlights
 highlight default link swiftTodos Todo
 highlight default link swiftShebang Comment
@@ -164,6 +172,7 @@ highlight default link swiftAttributes PreProc
 highlight default link swiftStructure Structure
 highlight default link swiftType Type
 highlight default link swiftImports Include
+highlight default link swiftPreprocessor PreProc
 
 
 let b:current_syntax = "swift"
