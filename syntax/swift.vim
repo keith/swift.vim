@@ -74,6 +74,7 @@ syntax keyword swiftKeywords
       \ else
       \ extension
       \ fallthrough
+      \ final
       \ for
       \ func
       \ get
@@ -85,16 +86,19 @@ syntax keyword swiftKeywords
       \ inout
       \ internal
       \ is
+      \ lazy
       \ let
       \ mutating
       \ nil
       \ operator
+      \ optional
       \ override
       \ postfix
       \ prefix
       \ private
       \ protocol
       \ public
+      \ required
       \ return
       \ self
       \ set
@@ -118,21 +122,17 @@ syntax keyword swiftAttributes
       \ @auto_closure
       \ @class_protocol
       \ @exported
-      \ @final
       \ @IBAction
       \ @IBDesignable
       \ @IBInspectable
       \ @IBOutlet
       \ @infix
-      \ @lazy
       \ @noreturn
       \ @NSCopying
       \ @NSManaged
       \ @objc
-      \ @optional
       \ @postfix
       \ @prefix
-      \ @required
 
 syntax keyword swiftStructure
       \ struct
