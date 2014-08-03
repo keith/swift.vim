@@ -83,6 +83,7 @@ syntax keyword swiftKeywords
       \ infix
       \ init
       \ inout
+      \ internal
       \ is
       \ let
       \ mutating
@@ -91,7 +92,9 @@ syntax keyword swiftKeywords
       \ override
       \ postfix
       \ prefix
+      \ private
       \ protocol
+      \ public
       \ return
       \ self
       \ set
