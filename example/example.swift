@@ -6,14 +6,26 @@ let foo = 5 // another comment
 
 /* this is also a comment */
 
+    /* this is an indented comment */
+
+    /* this is a multi level indented comment /* you know */ */
+
+// comments check splelling
+
 /* this is
 a multi-line
 /* you know */
 
+/// foo bar
+
+/** foo
+bar
+*/
+
 comment
 */
 
-"this is a string"
+"this is a string no splell checking"
 "this is a string\" with an escaped quote"
 
 // TODO: This is a todo comment
@@ -201,6 +213,7 @@ let library = [
 
 
 foo as? String
+let foo : Int = bar ?? 5
 
 
 class MainViewController: UIViewController, UITableViewDataSource {}
