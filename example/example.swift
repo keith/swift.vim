@@ -37,6 +37,8 @@ comment
 
 // MARK: this is a marker
 
+    // this is a indented comment
+
 5 // int
 
 5.5 // float

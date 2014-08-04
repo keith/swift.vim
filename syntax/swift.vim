@@ -18,7 +18,7 @@ syntax keyword swiftMarker contained MARK
 " Comment patterns
 syntax match swiftComment "\v\/\/.*$"
       \ contains=swiftTodos,swiftMarker,@Spell oneline
-syntax region swiftComment start="\v\/\*" end="\v\*\/"
+syntax region swiftComment start="\v^\s*\/\*" end="\v\*\/"
       \ contains=swiftTodos,swiftMarker,swiftComment,@Spell fold
 
 
