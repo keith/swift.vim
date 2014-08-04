@@ -71,6 +71,7 @@ syntax keyword swiftKeywords
       \ deinit
       \ didSet
       \ do
+      \ dynamic
       \ else
       \ extension
       \ fallthrough
