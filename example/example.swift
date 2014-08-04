@@ -16,14 +16,15 @@ let foo = 5 // another comment
 a multi-line
 /* you know */
 
-/// foo bar
-
 /** foo
 bar
 */
 
 comment
 */
+
+/// foo bar
+
 
 "this is a string no splell checking"
 "this is a string\" with an escaped quote"
