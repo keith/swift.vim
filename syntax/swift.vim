@@ -57,6 +57,7 @@ syntax match swiftOperator "\v[^/]\/[^/]"
 syntax match swiftOperator "\v\."
 syntax match swiftOperator "\v\<"
 syntax match swiftOperator "\v\>"
+syntax match swiftOperator "\v\?\?"
 
 
 " Keywords {{{
@@ -120,20 +121,16 @@ syntax keyword swiftKeywords
 
 syntax keyword swiftAttributes
       \ @assignment
-      \ @auto_closure
-      \ @class_protocol
+      \ @autoclosure
       \ @exported
       \ @IBAction
       \ @IBDesignable
       \ @IBInspectable
       \ @IBOutlet
-      \ @infix
       \ @noreturn
       \ @NSCopying
       \ @NSManaged
       \ @objc
-      \ @postfix
-      \ @prefix
 
 syntax keyword swiftStructure
       \ struct
