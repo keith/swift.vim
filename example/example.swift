@@ -67,7 +67,7 @@ comment
 %
 ^
 &
-*
+2 * 2
 -
 +
 =
@@ -234,3 +234,6 @@ override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
 #else
     quix
 #endif
+
+client.host = "example.com"
+client.pathPrefix = "/foo/"
