@@ -13,6 +13,11 @@ set cpo&vim
 
 setlocal indentexpr=SwiftIndent()
 
+function! s:NumberOfMatches(char, string)
+  let regex = "[^" . a:char . "]"
+  return strlen(substitute(a:string, regex, "", "g"))
+endfunction
+
 function! SwiftIndent()
   let line = getline(v:lnum)
   let previousNum = prevnonblank(v:lnum - 1)
@@ -27,7 +32,10 @@ function! SwiftIndent()
   endif
 
   " Indent multi line declarations see #19
-  if previous =~ "(" && previous !~ ")"
+  " Allow statements to also be in parens
+  let numOpenParens = s:NumberOfMatches("(", previous)
+  let numCloseParens = s:NumberOfMatches(")", previous)
+  if numOpenParens != 0 && (numOpenParens > numCloseParens)
     let previousParen = match(previous, "(")
     " Indent second line 1 space past above paren
     return previousParen + 1
@@ -36,12 +44,10 @@ function! SwiftIndent()
   endif
 
   if previous =~ ":$" && line !~ ":$"
-    echom "d"
     return indent(previousNum) + &tabstop
   endif
 
   if line =~ ":$"
-    echom "e"
     return indent(v:lnum) - &tabstop
   endif
 

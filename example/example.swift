@@ -247,6 +247,6 @@ func foo () {
   }
 }
 
-let foo = CGRectMake(0, 0,
+let foo = CGRectMake(0, (5 - 2),
                      100,
                      200)
