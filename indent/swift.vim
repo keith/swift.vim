@@ -26,6 +26,15 @@ function! SwiftIndent()
     return indent(previousNum) + &tabstop
   endif
 
+  " Indent multi line declarations see #19
+  if previous =~ "(" && previous !~ ")"
+    let previousParen = match(previous, "(")
+    " Indent second line 1 space past above paren
+    return previousParen + 1
+    " Indent it one tabstop in
+    " return indent(previousNum) + &tabstop
+  endif
+
   if previous =~ ":$" && line !~ ":$"
     return indent(previousNum) + &tabstop
   endif
@@ -36,7 +45,8 @@ function! SwiftIndent()
 
   " Make sure the line has a colon and that the line above isn't blank
   let thisColon = match(line, ":")
-  if thisColon > 0 && previousNum == v:lnum - 1
+  if thisColon > 0
+    " && previousNum == v:lnum - 1
     let prevColon = match(previous, ":")
     if prevColon > 0
       let minInd = &tabstop + indent(v:lnum)
