@@ -155,6 +155,7 @@ enum Card : Int {
 struct foo : bar {
     switch (foo) {
     case foo:
+      foo
     case bar:
     default:
         stuff
@@ -209,9 +210,9 @@ func simpleDescription() -> String {
 
 let library = [
     Movie(name: "foo bar",
-        dfasdfsdfdirector: "someone",
-                      foo: "bar",
-                  bazzzer: "qux")
+          dfasdfsdfdirector: "someone",
+          foo: "bar",
+          bazzzer: "qux")
 ]
 
 
@@ -222,7 +223,8 @@ let foo : Int = bar ?? 5
 class MainViewController: UIViewController, UITableViewDataSource {}
 
 @IBAction func changePostFilter(sender: UISegmentedControl) {}
-override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject) {}
+override func prepareForSegue(segue: UIStoryboardSegue,
+                              sender: AnyObject) {}
 override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {}
 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
 @lazy var foo : String

@@ -48,21 +48,10 @@ function! SwiftIndent()
   endif
 
   if line =~ ":$"
-    return indent(v:lnum) - &tabstop
-  endif
-
-  " Make sure the line has a colon and that the line above isn't blank
-  let thisColon = match(line, ":")
-  if thisColon > 0 && previousNum == v:lnum - 1
-    let prevColon = match(previous, ":")
-    if prevColon > 0
-      let minInd = &tabstop + indent(v:lnum)
-      let alignedInd = indent(previousNum) + prevColon - thisColon
-      if alignedInd < 0
-        return indent(previousNum) + &tabstop
-      else
-        return alignedInd
-      endif
+    if indent(v:lnum) > indent(previousNum)
+      return indent(v:lnum) - &tabstop
+    else
+      return indent(v:lnum)
     endif
   endif
 
