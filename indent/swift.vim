@@ -36,17 +36,18 @@ function! SwiftIndent()
   endif
 
   if previous =~ ":$" && line !~ ":$"
+    echom "d"
     return indent(previousNum) + &tabstop
   endif
 
   if line =~ ":$"
+    echom "e"
     return indent(v:lnum) - &tabstop
   endif
 
   " Make sure the line has a colon and that the line above isn't blank
   let thisColon = match(line, ":")
-  if thisColon > 0
-    " && previousNum == v:lnum - 1
+  if thisColon > 0 && previousNum == v:lnum - 1
     let prevColon = match(previous, ":")
     if prevColon > 0
       let minInd = &tabstop + indent(v:lnum)
