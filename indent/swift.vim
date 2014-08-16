@@ -34,8 +34,9 @@ function! SwiftIndent()
     return indent(v:lnum) - &tabstop
   endif
 
+  " Make sure the line has a colon and that the line above isn't blank
   let thisColon = match(line, ":")
-  if thisColon > 0
+  if thisColon > 0 && previousNum == v:lnum - 1
     let prevColon = match(previous, ":")
     if prevColon > 0
       let minInd = &tabstop + indent(v:lnum)
@@ -46,6 +47,15 @@ function! SwiftIndent()
         return alignedInd
       endif
     endif
+  endif
+
+  " Correctly indent bracketed things when using =
+  if line =~ "}"
+    let newIndent = &tabstop
+    if previous =~ "{"
+      let newIndent = 0
+    endif
+    return indent(previousNum) - newIndent
   endif
 
   return indent(previousNum)
