@@ -219,6 +219,9 @@ let library = [
 foo as? String
 let foo : Int = bar ?? 5
 
+let arg: String = "123"
+hello<String>(arg, arg2: 1.0, arg3: arg, arg4: "foo", arg5: false)
+
 
 class MainViewController: UIViewController, UITableViewDataSource {}
 
