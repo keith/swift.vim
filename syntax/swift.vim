@@ -136,10 +136,11 @@ syntax keyword swiftStructure
       \ struct
       \ enum
 
-syntax region swiftTypeWrapper start="\v:\s*" end="\v[^\w]" contains=swiftString,swiftType,swiftGenericsWrapper transparent oneline
+syntax region swiftTypeWrapper start="\v:\s*" end="\v[^\w]" contains=swiftMember,swiftString,swiftType,swiftGenericsWrapper transparent oneline
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
 syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=swiftType transparent oneline
 syntax region swiftReturnWrapper start="\v-\>\s*" end="\v(\{|$)" contains=swiftType transparent oneline
+syntax match swiftMember "\v\.\w+" contained containedin=swiftTypeWrapper
 syntax match swiftType "\v\w+" contained containedin=swiftGenericsWrapper,swiftTypeWrapper,swiftLiteralWrapper,swiftGenericsWrapper
 
 syntax keyword swiftImports import
@@ -169,6 +170,7 @@ highlight default link swiftKeywords Keyword
 highlight default link swiftAttributes PreProc
 highlight default link swiftStructure Structure
 highlight default link swiftType Type
+highlight default link swiftMember Type
 highlight default link swiftImports Include
 highlight default link swiftPreprocessor PreProc
 
