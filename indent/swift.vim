@@ -12,6 +12,7 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 setlocal indentexpr=SwiftIndent()
+setlocal indentkeys+=0[,0]
 
 function! s:NumberOfMatches(char, string)
   let regex = "[^" . a:char . "]"
@@ -29,6 +30,10 @@ function! SwiftIndent()
 
   if previous =~ "[" && previous !~ "]" && line !~ "]" && line !~ ":$"
     return indent(previousNum) + &tabstop
+  endif
+
+  if line =~ "^\\s*],\\?$"
+    return indent(previousNum) - &tabstop
   endif
 
   " Indent multi line declarations see #19

@@ -255,3 +255,11 @@ func foo () {
 let foo = CGRectMake(0, (5 - 2),
                      100,
                      200)
+
+
+let dict = [
+  "foo": "Bar",
+  "nest": [
+    "fadsf",
+  ],
+]
