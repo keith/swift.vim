@@ -230,7 +230,7 @@ override func prepareForSegue(segue: UIStoryboardSegue,
                               sender: AnyObject) {}
 override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {}
 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
-@lazy var foo : String
+lazy var foo : String
 
 #if foo
     bar
