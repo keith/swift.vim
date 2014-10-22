@@ -28,13 +28,13 @@ function! SwiftIndent()
     normal! mi
     if previous =~ ")"
       normal! k
-    elseif getline(previousNum - 1) =~ ")"
+    elseif getline(previousNum - 1) =~ ")" && getline(previousNum - 1) !~ ")"
       normal! kk
     else
       return indent(previousNum) + &tabstop
     endif
 
-    let openingParen = searchpair("(", "", ")", "bW") 
+    let openingParen = searchpair("(", "", ")", "bW")
     normal! `i
     return indent(openingParen) + &tabstop
   endif
