@@ -25,7 +25,18 @@ function! SwiftIndent()
   let previous = getline(previousNum)
 
   if previous =~ "{" && previous !~ "}" && line !~ "}" && line !~ ":$"
-    return indent(previousNum) + &tabstop
+    normal! mi
+    if previous =~ ")"
+      normal! k
+    elseif getline(previousNum - 1) =~ ")"
+      normal! kk
+    else
+      return indent(previousNum) + &tabstop
+    endif
+
+    let openingParen = searchpair("(", "", ")", "bW") 
+    normal! `i
+    return indent(openingParen) + &tabstop
   endif
 
   if previous =~ "[" && previous !~ "]" && line !~ "]" && line !~ ":$"
@@ -46,6 +57,17 @@ function! SwiftIndent()
     return previousParen + 1
     " Indent it one tabstop in
     " return indent(previousNum) + &tabstop
+  elseif numCloseParens > 0
+    " Indent lines with only { on them
+    if line =~ "^\\s*{\\s*$"
+      normal! mik
+      let startingIndent = indent(searchpair("(", "", ")", "bW"))
+      normal! `i
+      return startingIndent
+    else
+      " Indent lines after multi-line arguments
+      return indent(searchpair("(", "", ")", "bW"))
+    endif
   endif
 
   if previous =~ ":$" && line !~ ":$"

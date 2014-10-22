@@ -186,7 +186,10 @@ struct foo : bar {
 struct ArgumentList {
     var arguments: String[]
 
-    init(argv: UnsafePointer<CString>, count: CInt) {
+    init(argv: UnsafePointer<CString>,
+         count: CInt)
+    {
+        foo
     }
 }
 
