@@ -122,15 +122,18 @@ syntax keyword swiftKeywords
 syntax keyword swiftAttributes
       \ @assignment
       \ @autoclosure
+      \ @availability
       \ @exported
       \ @IBAction
       \ @IBDesignable
       \ @IBInspectable
       \ @IBOutlet
       \ @noreturn
+      \ @NSApplicationMain
       \ @NSCopying
       \ @NSManaged
       \ @objc
+      \ @UIApplicationMain
 
 syntax keyword swiftStructure
       \ struct
