@@ -85,7 +85,8 @@ function! SwiftIndent()
   " Correctly indent bracketed things when using =
   if line =~ "}"
     let newIndent = &tabstop
-    if previous =~ "{"
+    " The line match fixes issues here brackets in strings affect indentation
+    if previous =~ "{" || line =~ "{"
       let newIndent = 0
     endif
     return indent(previousNum) - newIndent
