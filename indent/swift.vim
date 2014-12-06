@@ -11,6 +11,7 @@ let b:did_indent = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
+setlocal indentkeys-=0{,0}
 setlocal indentkeys+=0[,0]
 setlocal indentexpr=SwiftIndent(v:lnum)
 
