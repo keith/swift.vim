@@ -11,7 +11,10 @@ let b:did_indent = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-setlocal indentkeys-=0{,0}
+setlocal indentkeys-=0{
+setlocal indentkeys-=0}
+setlocal indentkeys-=:
+setlocal indentkeys-=e
 setlocal indentkeys+=0[,0]
 setlocal indentexpr=SwiftIndent(v:lnum)
 
@@ -79,12 +82,14 @@ function! SwiftIndent(lnum)
       endif
 
       return previousIndent + shiftwidth()
-    elseif currentCloseBrackets > currentOpenBrackets
-      let openingBracket = searchpair("{", "", "}", "bWn")
-
-      return indent(openingBracket)
     elseif previous =~ "}.*{"
       return previousIndent + shiftwidth()
+    elseif line =~ "}.*{"
+      let openingBracket = searchpair("{", "", "}", "bWn")
+      return indent(openingBracket)
+    elseif currentCloseBrackets > currentOpenBrackets
+      let openingBracket = searchpair("{", "", "}", "bWn")
+      return indent(openingBracket)
     else
       return previousIndent
     endif
