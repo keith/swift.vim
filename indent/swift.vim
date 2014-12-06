@@ -11,12 +11,81 @@ let b:did_indent = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-setlocal indentexpr=SwiftIndent()
+" setlocal indentexpr=SwiftIndent()
+
+" setlocal cindent
+" setlocal cinkeys+=*<Return>,<>>,=let
+" setlocal cinwords+=let,func
+" setlocal cinoptions+=J1,j1
+
 setlocal indentkeys+=0[,0]
+setlocal indentexpr=Foo(v:lnum)
 
 function! s:NumberOfMatches(char, string)
   let regex = "[^" . a:char . "]"
   return strlen(substitute(a:string, regex, "", "g"))
+endfunction
+
+function! Foo(lnum)
+  let line = getline(a:lnum)
+  let previousNum = prevnonblank(a:lnum - 1)
+  let previous = getline(previousNum)
+  let cindent = cindent(a:lnum)
+  let previousIndent = indent(previousNum)
+
+  let numOpenParens = s:NumberOfMatches("(", previous)
+  let numCloseParens = s:NumberOfMatches(")", previous)
+  let numOpenBrackets = s:NumberOfMatches("{", previous)
+  let numCloseBrackets = s:NumberOfMatches("}", previous)
+
+  let currentOpenBrackets = s:NumberOfMatches("{", line)
+  let currentCloseBrackets = s:NumberOfMatches("}", line)
+
+  let numOpenSquare = s:NumberOfMatches("[", previous)
+  let numCloseSquare = s:NumberOfMatches("]", previous)
+
+  " " TODO: MAYBE this I'm not sure yet
+  " if cindent == previousIndent
+  "   echom "0"
+  "   return cindent
+  " endif
+
+  if numOpenParens == numCloseParens
+    if numOpenBrackets > numCloseBrackets
+      echom "1"
+      return cindent
+    elseif currentCloseBrackets > currentOpenBrackets
+      echom "2"
+      return cindent
+    else
+      echom "3"
+      echom numCloseBrackets
+      echom numOpenBrackets
+      return previousIndent
+    endif
+  endif
+
+  if numCloseParens > 0
+    if currentOpenBrackets > 0 || currentCloseBrackets > 0
+      return cindent
+    endif
+
+    normal! mi
+    execute "normal! " . previousNum . "G"
+    let openingParen = searchpair("(", "", ")", "bWn")
+    echom "openiung " . openingParen
+    normal! `i
+
+    return indent(openingParen)
+  endif
+
+  if numOpenSquare > numCloseSquare
+    echom "squares"
+    return previousIndent + shiftwidth()
+  endif
+
+  echom "4"
+  return cindent
 endfunction
 
 function! SwiftIndent()
