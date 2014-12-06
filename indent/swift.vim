@@ -14,8 +14,8 @@ set cpo&vim
 " setlocal indentexpr=SwiftIndent()
 
 " setlocal cindent
-" setlocal cinkeys+=*<Return>,<>>,=let
-" setlocal cinwords+=let,func
+" setlocal cinkeys+=*<Return>,<>>,=let,=func,=in
+" setlocal cinwords+=let,func,in
 " setlocal cinoptions+=J1,j1
 
 setlocal indentkeys+=0[,0]
@@ -44,30 +44,75 @@ function! Foo(lnum)
   let numOpenSquare = s:NumberOfMatches("[", previous)
   let numCloseSquare = s:NumberOfMatches("]", previous)
 
-  " " TODO: MAYBE this I'm not sure yet
-  " if cindent == previousIndent
-  "   echom "0"
-  "   return cindent
-  " endif
-
   if numOpenParens == numCloseParens
     if numOpenBrackets > numCloseBrackets
       echom "1"
-      return cindent
+      " echom numOpenBrackets
+      " echom numCloseBrackets
+      " return cindent
+      return previousIndent + shiftwidth()
     elseif currentCloseBrackets > currentOpenBrackets
       echom "2"
-      return cindent
+          normal! mi
+          " execute "normal! " . previousNum . "G"
+          let openingBracket = searchpair("{", "", "}", "bWn")
+          echom "openiung " . openingBracket
+          normal! `i
+
+          return indent(openingBracket)
+      " return cindent
+    elseif previous =~ "}.*{"
+      echom "machines"
+      return previousIndent + shiftwidth()
     else
       echom "3"
-      echom numCloseBrackets
-      echom numOpenBrackets
+      " echom numCloseBrackets
+      " echom numOpenBrackets
       return previousIndent
     endif
   endif
 
   if numCloseParens > 0
     if currentOpenBrackets > 0 || currentCloseBrackets > 0
+      if currentOpenBrackets > 0
+        if numOpenBrackets > numCloseBrackets
+
+          echom "100"
+          return previousIndent + shiftwidth()
+        endif
+
+        if line =~ "}.*{"
+          echom "101"
+
+          normal! mi
+          " execute "normal! " . previousNum . "G"
+          let openingBracket = searchpair("{", "", "}", "bWn")
+          echom "openiung " . openingBracket
+          normal! `i
+
+          return indent(openingBracket)
+        endif
+
+        echom "102"
+        return previousIndent
+      endif
+
+      if currentCloseBrackets > 0
+        return previousIndent - shiftwidth()
+      endif
+      echom "brackets"
       return cindent
+    endif
+
+    if numCloseParens < numOpenParens
+      if numOpenBrackets > numCloseBrackets
+        echom "21"
+        return previousIndent + shiftwidth()
+      endif
+
+      echom "20"
+      let previousParen = match(previous, "(")
+      return previousParen + 1
     endif
 
     normal! mi
@@ -77,6 +122,12 @@ function! Foo(lnum)
     normal! `i
 
     return indent(openingParen)
+  endif
+
+  if numOpenParens > 0
+    echom "had one opening before"
+    let previousParen = match(previous, "(")
+    return previousParen + 1
   endif
 
   if numOpenSquare > numCloseSquare
