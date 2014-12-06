@@ -1,7 +1,7 @@
 " File: swift.vim
 " Author: Keith Smiley
 " Description: The indent file for Swift
-" Last Modified: June 13, 2014
+" Last Modified: December 05, 2014
 
 if exists("b:did_indent")
   finish
@@ -16,7 +16,7 @@ set cpo&vim
 " setlocal cindent
 " setlocal cinkeys+=*<Return>,<>>,=let,=func,=in
 " setlocal cinwords+=let,func,in
-" setlocal cinoptions+=J1,j1
+" setlocal cinoptions+=:1,=4
 
 setlocal indentkeys+=0[,0]
 setlocal indentexpr=Foo(v:lnum)
@@ -24,6 +24,14 @@ setlocal indentexpr=Foo(v:lnum)
 function! s:NumberOfMatches(char, string)
   let regex = "[^" . a:char . "]"
   return strlen(substitute(a:string, regex, "", "g"))
+endfunction
+
+function! s:SyntaxGroup()
+  return synIDattr(synID(line("."), col("."), 0), "name")
+endfunction
+
+function! s:IsComment()
+  return s:SyntaxGroup() ==# 'swiftComment'
 endfunction
 
 function! Foo(lnum)
@@ -59,11 +67,37 @@ function! Foo(lnum)
     return indent(openingSquare)
   endif
 
+  " if previous =~ ":$" && line !~ ":$"
+  "   echom "30"
+  "   return previousIndent + shiftwidth()
+  " endif
+
+  if s:IsComment()
+    return previousIndent
+  endif
+
+  if line =~ ":$"
+    echom "31"
+    let switch = search('switch', 'bWn')
+    return indent(switch)
+    " return previousIndent
+    " if indent(v:lnum) > indent(previousNum)
+    "   echom "31"
+    "   return indent(v:lnum) - &tabstop
+    " else
+    "   echom "32"
+    "   return cindent
+    " endif
+  elseif previous =~ ":$"
+    echom "previous case"
+    return previousIndent + shiftwidth()
+  endif
+
   if numOpenParens == numCloseParens
     if numOpenBrackets > numCloseBrackets
-      echom "1"
 
       if currentCloseBrackets > currentOpenBrackets
+      echom "1"
         normal! mi
         " execute "normal! " . previousNum . "G"
         let openingBracket = searchpair("{", "", "}", "bWn")
@@ -73,6 +107,7 @@ function! Foo(lnum)
         return indent(openingBracket)
 
       endif
+      echom "15"
       " echom numOpenBrackets
       " echom numCloseBrackets
       " return cindent
@@ -158,6 +193,8 @@ function! Foo(lnum)
       return previousParen + 1
     endif
 
+
+    echom "22"
     normal! mi
     execute "normal! " . previousNum . "G"
     let openingParen = searchpair("(", "", ")", "bWn")
@@ -172,6 +209,8 @@ function! Foo(lnum)
     let previousParen = match(previous, "(")
     return previousParen + 1
   endif
+
+
 
   echom "4"
   return cindent
