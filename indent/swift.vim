@@ -44,22 +44,48 @@ function! Foo(lnum)
   let numOpenSquare = s:NumberOfMatches("[", previous)
   let numCloseSquare = s:NumberOfMatches("]", previous)
 
+  let currentCloseSquare = s:NumberOfMatches("]", line)
+  if numOpenSquare > numCloseSquare
+
+    echom "squares"
+    return previousIndent + shiftwidth()
+  endif
+
+  if currentCloseSquare > 0
+    echom "close square"
+    let openingSquare = searchpair('\[', '', '\]', 'bWn')
+    echom "openiung sqaure " . openingSquare
+
+    return indent(openingSquare)
+  endif
+
   if numOpenParens == numCloseParens
     if numOpenBrackets > numCloseBrackets
       echom "1"
+
+      if currentCloseBrackets > currentOpenBrackets
+        normal! mi
+        " execute "normal! " . previousNum . "G"
+        let openingBracket = searchpair("{", "", "}", "bWn")
+        echom "openiung " . openingBracket
+        normal! `i
+
+        return indent(openingBracket)
+
+      endif
       " echom numOpenBrackets
       " echom numCloseBrackets
       " return cindent
       return previousIndent + shiftwidth()
     elseif currentCloseBrackets > currentOpenBrackets
       echom "2"
-          normal! mi
-          " execute "normal! " . previousNum . "G"
-          let openingBracket = searchpair("{", "", "}", "bWn")
-          echom "openiung " . openingBracket
-          normal! `i
+      normal! mi
+      " execute "normal! " . previousNum . "G"
+      let openingBracket = searchpair("{", "", "}", "bWn")
+      echom "openiung " . openingBracket
+      normal! `i
 
-          return indent(openingBracket)
+      return indent(openingBracket)
       " return cindent
     elseif previous =~ "}.*{"
       echom "machines"
@@ -93,12 +119,29 @@ function! Foo(lnum)
           return indent(openingBracket)
         endif
 
+        if numCloseParens > numOpenParens
+          echom "103"
+
+          normal! mi
+          normal! k
+          let openingParen = searchpair("(", "", ")", "bWn")
+          echom "openiung " . openingParen
+          normal! `i
+          return indent(openingParen)
+        endif
+
         echom "102"
         return previousIndent
       endif
 
       if currentCloseBrackets > 0
-        return previousIndent - shiftwidth()
+        echom "104"
+        " return previousIndent - shiftwidth()
+        let openingBracket = searchpair("{", "", "}", "bWn")
+        echom "openiung " . openingBracket
+        " normal! `i
+
+        return indent(openingBracket)
       endif
       echom "brackets"
       return cindent
@@ -128,11 +171,6 @@ function! Foo(lnum)
     echom "had one opening before"
     let previousParen = match(previous, "(")
     return previousParen + 1
-  endif
-
-  if numOpenSquare > numCloseSquare
-    echom "squares"
-    return previousIndent + shiftwidth()
   endif
 
   echom "4"
