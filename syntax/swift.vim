@@ -15,13 +15,6 @@ syntax match swiftShebang "\v#!.*$"
 syntax keyword swiftTodos contained TODO XXX FIXME NOTE
 syntax keyword swiftMarker contained MARK
 
-" Comment patterns
-syntax match swiftComment "\v\/\/.*$"
-      \ contains=swiftTodos,swiftMarker,@Spell oneline
-syntax region swiftComment start="\v^\s*\/\*" end="\v\*\/"
-      \ contains=swiftTodos,swiftMarker,swiftComment,@Spell fold
-
-
 " Literals
 " Strings
 syntax region swiftString start=/"/ skip=/\\"/ end=/"/ contains=swiftInterpolatedWrapper
@@ -53,7 +46,7 @@ syntax match swiftOperator "\v-"
 syntax match swiftOperator "\v\+"
 syntax match swiftOperator "\v\="
 syntax match swiftOperator "\v\|"
-syntax match swiftOperator "\v[^/"]\/[^/"]"
+syntax match swiftOperator "\v\/"
 syntax match swiftOperator "\v\."
 syntax match swiftOperator "\v\<"
 syntax match swiftOperator "\v\>"
@@ -154,6 +147,13 @@ syntax keyword swiftPreprocessor
       \ #elseif
       \ #else
       \ #endif
+
+
+" Comment patterns
+syntax match swiftComment "\v\/\/.*$"
+      \ contains=swiftTodos,swiftMarker,@Spell oneline
+syntax region swiftComment start="/\*" end="\*/"
+      \ contains=swiftTodos,swiftMarker,swiftComment,@Spell fold
 
 
 " Set highlights
