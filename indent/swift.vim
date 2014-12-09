@@ -51,7 +51,6 @@ function! SwiftIndent(lnum)
 
   let currentCloseSquare = s:NumberOfMatches("]", line)
   if numOpenSquare > numCloseSquare
-
     return previousIndent + shiftwidth()
   endif
 
@@ -89,6 +88,17 @@ function! SwiftIndent(lnum)
       return indent(openingBracket)
     elseif currentCloseBrackets > currentOpenBrackets
       let openingBracket = searchpair("{", "", "}", "bWn")
+      let bracketLine = getline(openingBracket)
+
+      let numOpenParensBracketLine = s:NumberOfMatches("(", bracketLine)
+      let numCloseParensBracketLine = s:NumberOfMatches(")", bracketLine)
+      if numCloseParensBracketLine > numOpenParensBracketLine
+        normal! mi
+        execute "normal! " . openingBracket . "G"
+        let openingParen = searchpair("(", "", ")", "bWn")
+        normal! `i
+        return indent(openingParen)
+      endif
       return indent(openingBracket)
     else
       return previousIndent
@@ -135,6 +145,15 @@ function! SwiftIndent(lnum)
 
       let previousParen = match(previous, "(")
       return previousParen + 1
+    endif
+
+    if numOpenBrackets > numCloseBrackets
+      normal! mi
+      execute "normal! " . previousNum . "G"
+      let openingParen = searchpair("(", "", ")", "bWn")
+      normal! `i
+
+      return indent(openingParen) + shiftwidth()
     endif
 
     normal! mi
