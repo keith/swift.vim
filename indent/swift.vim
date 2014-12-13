@@ -114,14 +114,11 @@ function! SwiftIndent(lnum)
 
         if line =~ "}.*{"
           let openingBracket = searchpair("{", "", "}", "bWn")
-
           return indent(openingBracket)
         endif
 
         if numCloseParens > numOpenParens
-
-          normal! mi
-          normal! k
+          normal! mik
           let openingParen = searchpair("(", "", ")", "bWn")
           normal! `i
           return indent(openingParen)
