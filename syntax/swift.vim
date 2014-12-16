@@ -52,6 +52,9 @@ syntax match swiftOperator "\v\<"
 syntax match swiftOperator "\v\>"
 syntax match swiftOperator "\v\?\?"
 
+" Methods/Functions
+syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
+
 
 " Keywords {{{
 syntax keyword swiftKeywords
@@ -174,6 +177,7 @@ highlight default link swiftStructure Structure
 highlight default link swiftType Type
 highlight default link swiftImports Include
 highlight default link swiftPreprocessor PreProc
+highlight default link swiftMethod Function
 
 
 let b:current_syntax = "swift"
