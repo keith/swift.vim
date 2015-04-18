@@ -135,7 +135,7 @@ syntax keyword swiftStructure
       \ struct
       \ enum
 
-syntax region swiftTypeWrapper start="\v:\s*" end="\v[^\w]" contains=swiftString,swiftBoolean,swiftNumber,swiftType,swiftGenericsWrapper transparent oneline
+syntax region swiftTypeWrapper start="\v:\s*" end="\v(,\s?\w+\s?\{)|[^\w]" contains=swiftString,swiftBoolean,swiftNumber,swiftType,swiftGenericsWrapper transparent oneline
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
 syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=swiftType,swiftString transparent oneline
 syntax region swiftReturnWrapper start="\v-\>\s*" end="\v(\{|$)" contains=swiftType transparent oneline
