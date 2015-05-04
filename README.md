@@ -7,8 +7,8 @@ If you don't have a preferred installation method check out
 
 ## Examples
 
-![](https://raw.githubusercontent.com/Keithbsmiley/swift.vim/master/screenshots/screen.png)
-![](https://raw.githubusercontent.com/Keithbsmiley/swift.vim/master/screenshots/screen2.png)
+![](https://raw.githubusercontent.com/keith/swift.vim/master/screenshots/screen.png)
+![](https://raw.githubusercontent.com/keith/swift.vim/master/screenshots/screen2.png)
 
 
 ### Development
