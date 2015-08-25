@@ -131,6 +131,7 @@ syntax keyword swiftAttributes
       \ @IBDesignable
       \ @IBInspectable
       \ @IBOutlet
+      \ @noescape
       \ @nonobjc
       \ @noreturn
       \ @NSApplicationMain
