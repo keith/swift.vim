@@ -55,6 +55,8 @@ syntax match swiftOperator "\v\?\?"
 " Methods/Functions
 syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
 
+syntax match swiftAvailability "\v((iOS|OSX|watchOS)\s+\d+(\.\d+(.\d+)?)?\s*,\s*)+\*"
+syntax keyword swiftPlatforms OSX iOS watchOS contained containedin=swiftAvailability
 
 " Keywords {{{
 syntax keyword swiftKeywords
@@ -192,6 +194,9 @@ highlight default link swiftType Type
 highlight default link swiftImports Include
 highlight default link swiftPreprocessor PreProc
 highlight default link swiftMethod Function
+highlight default link swiftConditionStatement PreProc
+highlight default link swiftAvailability Normal
+highlight default link swiftPlatforms Keyword
 
 
 let b:current_syntax = "swift"
