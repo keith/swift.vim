@@ -61,6 +61,12 @@ comment
 0o567 // octal
 0o5689 // broken octal
 
+1_000_000 // underscore separated million
+1_000_0000_ // broken underscore separated number
+1_000_000.000_000_1  // just over one million
+1_18181888_2.1       // still valid according to swift repl
+1_18181888_2.1.1       // broken underscore padded double
+
 // Operators
 ~
 !
