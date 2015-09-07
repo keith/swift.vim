@@ -55,8 +55,9 @@ syntax match swiftOperator "\v\?\?"
 " Methods/Functions
 syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
 
-syntax match swiftAvailability "\v((iOS|OSX|watchOS)\s+\d+(\.\d+(.\d+)?)?\s*,\s*)+\*"
-syntax keyword swiftPlatforms OSX iOS watchOS contained containedin=swiftAvailability
+syntax match swiftAvailability "\v((\*(\s*,\s*[a-zA-Z="0-9.]+)*)|(\w+\s+\d+(\.\d+(.\d+)?)?\s*,\s*)+\*)" contains=swiftString
+syntax keyword swiftPlatforms OSX iOS watchOS OSXApplicationExtension iOSApplicationExtension contained containedin=swiftAvailability
+syntax keyword swiftAvailabilityArg renamed unavailable introduced deprecated obsoleted message contained containedin=swiftAvailability
 
 " Keywords {{{
 syntax keyword swiftKeywords
@@ -194,8 +195,10 @@ highlight default link swiftType Type
 highlight default link swiftImports Include
 highlight default link swiftPreprocessor PreProc
 highlight default link swiftMethod Function
+
 highlight default link swiftConditionStatement PreProc
 highlight default link swiftAvailability Normal
+highlight default link swiftAvailabilityArg Special
 highlight default link swiftPlatforms Keyword
 
 

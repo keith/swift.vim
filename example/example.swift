@@ -246,6 +246,7 @@ lazy var foo : String
 client.host = "example.com"
 client.pathPrefix = "/foo/"
 
+@available(*, unavailable, renamed="bar", introduced=1.0, deprecated=2.2, message="hi")
 func foo () {
   override func loadView() {
     super.loadView()
