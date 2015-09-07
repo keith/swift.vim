@@ -68,7 +68,9 @@ comment
 1_18181888_2.1.1         // broken underscore padded double
 1_18181888_2.1           // valid according to swift repl
 1_0_0                    // valid 100
+1_0_000.2                // valid 10000.2
 1_____0.2________20___2  // also valid 10.2202
+4__3.2_33_33             // valid 43.233
 
 // Operators
 ~
