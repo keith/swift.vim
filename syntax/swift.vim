@@ -124,7 +124,7 @@ syntax keyword swiftKeywords
 syntax keyword swiftAttributes
       \ @assignment
       \ @autoclosure
-      \ @availability
+      \ @available
       \ @convention
       \ @exported
       \ @IBAction
@@ -141,6 +141,8 @@ syntax keyword swiftAttributes
       \ @testable
       \ @UIApplicationMain
       \ @warn_unused_result
+
+syntax keyword swiftConditionalAttributes #available
 
 syntax keyword swiftStructure
       \ struct
@@ -184,6 +186,7 @@ highlight default link swiftBoolean Boolean
 highlight default link swiftOperator Operator
 highlight default link swiftKeywords Keyword
 highlight default link swiftAttributes PreProc
+highlight default link swiftConditionalAttributes PreProc
 highlight default link swiftStructure Structure
 highlight default link swiftType Type
 highlight default link swiftImports Include
