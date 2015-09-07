@@ -198,7 +198,7 @@ highlight default link swiftMethod Function
 
 highlight default link swiftConditionStatement PreProc
 highlight default link swiftAvailability Normal
-highlight default link swiftAvailabilityArg Special
+highlight default link swiftAvailabilityArg Normal
 highlight default link swiftPlatforms Keyword
 
 
