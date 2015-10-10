@@ -83,6 +83,7 @@ syntax keyword swiftKeywords
       \ if
       \ import
       \ in
+      \ indirect
       \ infix
       \ init
       \ inout
@@ -92,6 +93,7 @@ syntax keyword swiftKeywords
       \ let
       \ mutating
       \ nil
+      \ nonmutating
       \ operator
       \ optional
       \ override
@@ -102,6 +104,7 @@ syntax keyword swiftKeywords
       \ public
       \ repeat
       \ required
+      \ rethrows
       \ return
       \ self
       \ set
@@ -113,8 +116,6 @@ syntax keyword swiftKeywords
       \ try
       \ typealias
       \ unowned
-      \ unowned(safe)
-      \ unowned(unsafe)
       \ var
       \ weak
       \ where
