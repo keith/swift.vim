@@ -59,6 +59,7 @@ syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
 " Keywords {{{
 syntax keyword swiftKeywords
       \ as
+      \ atexit
       \ break
       \ case
       \ catch
