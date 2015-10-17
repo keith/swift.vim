@@ -84,10 +84,10 @@ function! SwiftIndent(lnum)
     elseif previous =~ "}.*{"
       return previousIndent + shiftwidth()
     elseif line =~ "}.*{"
-      let openingBracket = searchpair("{", "", "}", "bWn")
+      let openingBracket = searchpair("{", "", "}", "bWn", 's:IsComment()')
       return indent(openingBracket)
     elseif currentCloseBrackets > currentOpenBrackets
-      let openingBracket = searchpair("{", "", "}", "bWn")
+      let openingBracket = searchpair("{", "", "}", "bWn", 's:IsComment()')
       let bracketLine = getline(openingBracket)
 
       let numOpenParensBracketLine = s:NumberOfMatches("(", bracketLine)
@@ -113,7 +113,7 @@ function! SwiftIndent(lnum)
         endif
 
         if line =~ "}.*{"
-          let openingBracket = searchpair("{", "", "}", "bWn")
+          let openingBracket = searchpair("{", "", "}", "bWn", 's:IsComment()')
           return indent(openingBracket)
         endif
 
@@ -128,7 +128,7 @@ function! SwiftIndent(lnum)
       endif
 
       if currentCloseBrackets > 0
-        let openingBracket = searchpair("{", "", "}", "bWn")
+        let openingBracket = searchpair("{", "", "}", "bWn", 's:IsComment()')
         return indent(openingBracket)
       endif
 
