@@ -23,6 +23,7 @@ syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftI
 
 " Numbers
 syntax match swiftNumber "\v<\d+>"
+syntax match swiftNumber "\v<(\d+_+)+\d+(\.\d+(_+\d+)*)?>"
 syntax match swiftNumber "\v<\d+\.\d+>"
 syntax match swiftNumber "\v<\d*\.?\d+([Ee]-?)?\d+>"
 syntax match swiftNumber "\v<0x\x+([Pp]-?)?\x+>"
