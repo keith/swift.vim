@@ -257,6 +257,7 @@ lazy var foo : String
 client.host = "example.com"
 client.pathPrefix = "/foo/"
 
+@available(*, unavailable, renamed="bar", introduced=1.0, deprecated=2.2, message="hi")
 func foo () {
   override func loadView() {
     super.loadView()
@@ -277,3 +278,10 @@ let dict = [
     "fadsf",
   ],
 ]
+
+if #available(OSX 10.10.3, *) {
+    // Use APIs OS X 10.10.3 and onwards
+}
+if #available(watchOS 2, iOS 9.0, OSX 10.11, *) {
+    // APIs available to watchOS 2.0, iOS 9.0, OSX 10.11 and onwards
+}
