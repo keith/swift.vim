@@ -112,6 +112,7 @@ syntax keyword swiftKeywords
       \ subscript
       \ super
       \ switch
+      \ throw
       \ throws
       \ try
       \ typealias
