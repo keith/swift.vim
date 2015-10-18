@@ -15,7 +15,7 @@ setlocal indentkeys-=0{
 setlocal indentkeys-=0}
 setlocal indentkeys-=:
 setlocal indentkeys-=e
-setlocal indentkeys+=0[,0]
+setlocal indentkeys+=0]
 setlocal indentexpr=SwiftIndent(v:lnum)
 
 function! s:NumberOfMatches(char, string, index)
@@ -83,7 +83,11 @@ function! SwiftIndent(lnum)
   endif
 
   if currentCloseSquare > 0
-    let openingSquare = searchpair("\[", "", "\]", "bWn", "s:IsExcludedFromIndent()")
+    let openingSquare = searchpair("\\[", "", "\\]", "bWn", "s:IsExcludedFromIndent()")
+
+    if openingSquare == 0
+      return previousIndent - shiftwidth()
+    endif
 
     return indent(openingSquare)
   endif
