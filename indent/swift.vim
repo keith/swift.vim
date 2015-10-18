@@ -11,13 +11,11 @@ let b:did_indent = 1
 let s:cpo_save = &cpo
 set cpo&vim
 
-setlocal smartindent
-setlocal indentkeys-=0{
-setlocal indentkeys-=0}
+setlocal nosmartindent
 setlocal indentkeys-=:
 setlocal indentkeys-=e
 setlocal indentkeys+=0]
-setlocal indentexpr=SwiftIndent(v:lnum)
+setlocal indentexpr=SwiftIndent()
 
 function! s:NumberOfMatches(char, string, index)
   let instances = 0
@@ -56,15 +54,17 @@ function! s:IsCommentLine(lnum)
           \ ==# "swiftComment"
 endfunction
 
-function! SwiftIndent(lnum)
-  let line = getline(a:lnum)
-  let previousNum = prevnonblank(a:lnum - 1)
+function! SwiftIndent(...)
+  let clnum = a:0 ? a:1 : v:lnum
+
+  let line = getline(clnum)
+  let previousNum = prevnonblank(clnum - 1)
   while s:IsCommentLine(previousNum) != 0
     let previousNum = prevnonblank(previousNum - 1)
   endwhile
 
   let previous = getline(previousNum)
-  let cindent = cindent(a:lnum)
+  let cindent = cindent(clnum)
   let previousIndent = indent(previousNum)
 
   let numOpenParens = s:NumberOfMatches("(", previous, previousNum)
@@ -72,22 +72,25 @@ function! SwiftIndent(lnum)
   let numOpenBrackets = s:NumberOfMatches("{", previous, previousNum)
   let numCloseBrackets = s:NumberOfMatches("}", previous, previousNum)
 
-  let currentOpenBrackets = s:NumberOfMatches("{", line, a:lnum)
-  let currentCloseBrackets = s:NumberOfMatches("}", line, a:lnum)
+  let currentOpenBrackets = s:NumberOfMatches("{", line, clnum)
+  let currentCloseBrackets = s:NumberOfMatches("}", line, clnum)
 
   let numOpenSquare = s:NumberOfMatches("[", previous, previousNum)
   let numCloseSquare = s:NumberOfMatches("]", previous, previousNum)
 
-  let currentCloseSquare = s:NumberOfMatches("]", line, a:lnum)
-  if numOpenSquare > numCloseSquare
+  let currentCloseSquare = s:NumberOfMatches("]", line, clnum)
+  if numOpenSquare > numCloseSquare && currentCloseSquare < 1
     return previousIndent + shiftwidth()
   endif
 
-  if currentCloseSquare > 0
+  if currentCloseSquare > 0 && line !~ '\v\[.*\]'
+    let column = col(".")
+    call cursor(line("."), 1)
     let openingSquare = searchpair("\\[", "", "\\]", "bWn", "s:IsExcludedFromIndent()")
+    call cursor(line("."), column)
 
     if openingSquare == 0
-      return previousIndent - shiftwidth()
+      return -1
     endif
 
     return indent(openingSquare)
@@ -107,11 +110,15 @@ function! SwiftIndent(lnum)
   if numOpenParens == numCloseParens
     if numOpenBrackets > numCloseBrackets
       if currentCloseBrackets > currentOpenBrackets || line =~ "\\v^\\s*}"
-        let line = line(".")
         let column = col(".")
+        call cursor(line("."), 1)
         let openingBracket = searchpair("{", "", "}", "bWn", "s:IsExcludedFromIndent()")
-        call cursor(line, column)
-        return indent(openingBracket)
+        call cursor(line("."), column)
+        if openingBracket == 0
+          return -1
+        else
+          return indent(openingBracket)
+        endif
       endif
 
       return previousIndent + shiftwidth()
@@ -140,7 +147,7 @@ function! SwiftIndent(lnum)
       endif
       return indent(openingBracket)
     else
-      return previousIndent
+      return -1
     endif
   endif
 

@@ -166,7 +166,7 @@ enum Card : Int {
 struct foo : bar {
     switch (foo) {
     case foo:
-      foo
+        foo
     case bar:
     default:
         stuff
@@ -247,11 +247,11 @@ override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
 lazy var foo : String
 
 #if foo
-    bar
+bar
 #elseif baz
-    qux
+qux
 #else
-    quix
+quix
 #endif
 
 client.host = "example.com"
@@ -259,12 +259,12 @@ client.pathPrefix = "/foo/"
 
 @available(*, unavailable, renamed="bar", introduced=1.0, deprecated=2.2, message="hi")
 func foo () {
-  override func loadView() {
-    super.loadView()
-    if foo {
-      foobar
+    override func loadView() {
+        super.loadView()
+        if foo {
+            foobar
+        }
     }
-  }
 }
 
 let foo = CGRectMake(0, (5 - 2),
@@ -273,10 +273,10 @@ let foo = CGRectMake(0, (5 - 2),
 
 
 let dict = [
-  "foo": "Bar",
-  "nest": [
-    "fadsf",
-  ],
+    "foo": "Bar",
+    "nest": [
+        "fadsf",
+    ]
 ]
 
 if #available(OSX 10.10.3, *) {
