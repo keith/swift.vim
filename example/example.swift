@@ -292,3 +292,11 @@ if #available(watchOS 2, iOS 9.0, OSX 10.11, *) {
 string.rangeOfString("^/Date\\(")
 
 public var `extension`: String?
+
+/**
+This is the comment body
+
+- parameter first: The first parameter
+
+- returns: Some value
+*/

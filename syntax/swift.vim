@@ -14,6 +14,8 @@ syntax match swiftShebang "\v#!.*$"
 " Comment contained keywords
 syntax keyword swiftTodos contained TODO XXX FIXME NOTE
 syntax keyword swiftMarker contained MARK
+syntax match swiftDocString "\v^\s*-\s*parameter" contained
+syntax match swiftDocString "\v^\s*-\s*returns" contained
 
 " Literals
 " Strings
@@ -182,13 +184,14 @@ syntax keyword swiftPreprocessor
 
 " Comment patterns
 syntax match swiftComment "\v\/\/.*$"
-      \ contains=swiftTodos,swiftMarker,@Spell oneline
+      \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell oneline
 syntax region swiftComment start="/\*" end="\*/"
-      \ contains=swiftTodos,swiftMarker,swiftComment,@Spell fold
+      \ contains=swiftTodos,swiftDocString,swiftMarker,swiftComment,@Spell fold
 
 
 " Set highlights
 highlight default link swiftTodos Todo
+highlight default link swiftDocString String
 highlight default link swiftShebang Comment
 highlight default link swiftComment Comment
 highlight default link swiftMarker Comment
