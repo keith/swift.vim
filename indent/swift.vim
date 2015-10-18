@@ -23,17 +23,23 @@ function! s:NumberOfMatches(char, string)
   return strlen(substitute(a:string, regex, "", "g"))
 endfunction
 
-function! s:SyntaxGroup()
-  return synIDattr(synID(line("."), col("."), 0), "name")
+function! s:IsComment()
+  return synIDattr(synID(line("."), col("."), 0), "name") ==# "swiftComment"
 endfunction
 
-function! s:IsComment()
-  return s:SyntaxGroup() ==# 'swiftComment'
+function! s:IsCommentLine(lnum)
+    return synIDattr(synID(a:lnum,
+          \     match(getline(a:lnum), "\S") + 1, 0), "name")
+          \ ==# "swiftComment"
 endfunction
 
 function! SwiftIndent(lnum)
   let line = getline(a:lnum)
   let previousNum = prevnonblank(a:lnum - 1)
+  while s:IsCommentLine(previousNum) != 0
+    let previousNum = prevnonblank(previousNum - 1)
+  endwhile
+
   let previous = getline(previousNum)
   let cindent = cindent(a:lnum)
   let previousIndent = indent(previousNum)
@@ -55,7 +61,7 @@ function! SwiftIndent(lnum)
   endif
 
   if currentCloseSquare > 0
-    let openingSquare = searchpair('\[', '', '\]', 'bWn')
+    let openingSquare = searchpair("\[", "", "\]", "bWn", "s:ISComment()")
 
     return indent(openingSquare)
   endif
@@ -65,7 +71,7 @@ function! SwiftIndent(lnum)
   endif
 
   if line =~ ":$"
-    let switch = search('switch', 'bWn')
+    let switch = search("switch", "bWn")
     return indent(switch)
   elseif previous =~ ":$"
     return previousIndent + shiftwidth()
@@ -74,9 +80,10 @@ function! SwiftIndent(lnum)
   if numOpenParens == numCloseParens
     if numOpenBrackets > numCloseBrackets
       if currentCloseBrackets > currentOpenBrackets
-        normal! mi
-        let openingBracket = searchpair("{", "", "}", "bWn")
-        normal! `i
+        let line = line(".")
+        let column = col(".")
+        let openingBracket = searchpair("{", "", "}", "bWn", "s:IsComment()")
+        call cursor(line, column)
         return indent(openingBracket)
       endif
 
@@ -84,19 +91,20 @@ function! SwiftIndent(lnum)
     elseif previous =~ "}.*{"
       return previousIndent + shiftwidth()
     elseif line =~ "}.*{"
-      let openingBracket = searchpair("{", "", "}", "bWn")
+      let openingBracket = searchpair("{", "", "}", "bWn", "s:IsComment()")
       return indent(openingBracket)
     elseif currentCloseBrackets > currentOpenBrackets
-      let openingBracket = searchpair("{", "", "}", "bWn")
+      let openingBracket = searchpair("{", "", "}", "bWn", "s:IsComment()")
       let bracketLine = getline(openingBracket)
 
       let numOpenParensBracketLine = s:NumberOfMatches("(", bracketLine)
       let numCloseParensBracketLine = s:NumberOfMatches(")", bracketLine)
       if numCloseParensBracketLine > numOpenParensBracketLine
-        normal! mi
-        execute "normal! " . openingBracket . "G"
-        let openingParen = searchpair("(", "", ")", "bWn")
-        normal! `i
+        let line = line(".")
+        let column = col(".")
+        call cursor(openingParen, column)
+        let openingParen = searchpair("(", "", ")", "bWn", "s:IsComment()")
+        call cursor(line, column)
         return indent(openingParen)
       endif
       return indent(openingBracket)
@@ -113,14 +121,16 @@ function! SwiftIndent(lnum)
         endif
 
         if line =~ "}.*{"
-          let openingBracket = searchpair("{", "", "}", "bWn")
+          let openingBracket = searchpair("{", "", "}", "bWn", "s:IsComment()")
           return indent(openingBracket)
         endif
 
         if numCloseParens > numOpenParens
-          normal! mik
-          let openingParen = searchpair("(", "", ")", "bWn")
-          normal! `i
+          let line = line(".")
+          let column = col(".")
+          call cursor(line - 1, column)
+          let openingParen = searchpair("(", "", ")", "bWn", "s:IsComment()")
+          call cursor(line, column)
           return indent(openingParen)
         endif
 
@@ -128,7 +138,7 @@ function! SwiftIndent(lnum)
       endif
 
       if currentCloseBrackets > 0
-        let openingBracket = searchpair("{", "", "}", "bWn")
+        let openingBracket = searchpair("{", "", "}", "bWn", "s:IsComment()")
         return indent(openingBracket)
       endif
 
@@ -145,18 +155,19 @@ function! SwiftIndent(lnum)
     endif
 
     if numOpenBrackets > numCloseBrackets
-      normal! mi
-      execute "normal! " . previousNum . "G"
-      let openingParen = searchpair("(", "", ")", "bWn")
-      normal! `i
-
+      let line = line(".")
+      let column = col(".")
+      call cursor(previousNum, column)
+      let openingParen = searchpair("(", "", ")", "bWn", "s:ISComment()")
+      call cursor(line, column)
       return indent(openingParen) + shiftwidth()
     endif
 
-    normal! mi
-    execute "normal! " . previousNum . "G"
-    let openingParen = searchpair("(", "", ")", "bWn")
-    normal! `i
+    let line = line(".")
+    let column = col(".")
+    call cursor(previousNum, column)
+    let openingParen = searchpair("(", "", ")", "bWn", "s:ISComment()")
+    call cursor(line, column)
 
     return indent(openingParen)
   endif
