@@ -101,7 +101,7 @@ function! SwiftIndent(lnum)
 
   if numOpenParens == numCloseParens
     if numOpenBrackets > numCloseBrackets
-      if currentCloseBrackets > currentOpenBrackets
+      if currentCloseBrackets > currentOpenBrackets || line =~ "\\v^\\s*}"
         let line = line(".")
         let column = col(".")
         let openingBracket = searchpair("{", "", "}", "bWn", "s:IsExcludedFromIndent()")
@@ -111,6 +111,10 @@ function! SwiftIndent(lnum)
 
       return previousIndent + shiftwidth()
     elseif previous =~ "}.*{"
+      if line =~ "\\v^\\s*}"
+        return previousIndent
+      endif
+
       return previousIndent + shiftwidth()
     elseif line =~ "}.*{"
       let openingBracket = searchpair("{", "", "}", "bWn", "s:IsExcludedFromIndent()")
