@@ -290,3 +290,5 @@ if #available(watchOS 2, iOS 9.0, OSX 10.11, *) {
 "\\".uppercaseString()
 "foo \(1 + 1)"
 string.rangeOfString("^/Date\\(")
+
+public var `extension`: String?
