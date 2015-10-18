@@ -37,7 +37,7 @@ function! s:SyntaxNameAtPosition(line, column)
 endfunction
 
 function! s:SyntaxName()
-  return s:SyntaxNameAtPosition(".", ".")
+  return s:SyntaxNameAtPosition(line("."), col("."))
 endfunction
 
 function! s:IsExcludedFromIndentAtPosition(line, column)
