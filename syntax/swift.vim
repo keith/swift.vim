@@ -218,5 +218,8 @@ highlight default link swiftAvailability Normal
 highlight default link swiftAvailabilityArg Normal
 highlight default link swiftPlatforms Keyword
 
+" Force vim to sync at least x lines. This solves the multiline comment not
+" being highlighted issue
+syn sync minlines=100
 
 let b:current_syntax = "swift"
