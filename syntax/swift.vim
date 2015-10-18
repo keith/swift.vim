@@ -14,8 +14,8 @@ syntax match swiftShebang "\v#!.*$"
 " Comment contained keywords
 syntax keyword swiftTodos contained TODO XXX FIXME NOTE
 syntax keyword swiftMarker contained MARK
-syntax match swiftDocString "\v^\s*-\s*parameter" contained
-syntax match swiftDocString "\v^\s*-\s*returns" contained
+syntax match swiftDocString "\v^\s*-\s*parameter"hs=s+1 contained
+syntax match swiftDocString "\v^\s*-\s*returns"hs=s+1 contained
 
 " Literals
 " Strings
