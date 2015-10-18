@@ -285,3 +285,8 @@ if #available(OSX 10.10.3, *) {
 if #available(watchOS 2, iOS 9.0, OSX 10.11, *) {
     // APIs available to watchOS 2.0, iOS 9.0, OSX 10.11 and onwards
 }
+
+// Tests backslashes in strings
+"\\".uppercaseString()
+"foo \(1 + 1)"
+string.rangeOfString("^/Date\\(")
