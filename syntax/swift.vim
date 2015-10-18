@@ -131,6 +131,11 @@ syntax keyword swiftKeywords
       \ willSet
 " }}}
 
+" Names surrounded by backticks. This aren't limited to keywords because 1)
+" Swift doesn't limit them to keywords and 2) I couldn't make the keywords not
+" highlight at the same time
+syntax region swiftEscapedReservedWord start="`" end="`" oneline
+
 syntax keyword swiftAttributes
       \ @assignment
       \ @autoclosure
@@ -195,6 +200,7 @@ highlight default link swiftBoolean Boolean
 
 highlight default link swiftOperator Operator
 highlight default link swiftKeywords Keyword
+highlight default link swiftEscapedReservedWord Normal
 highlight default link swiftClosureArgument Operator
 highlight default link swiftAttributes PreProc
 highlight default link swiftConditionStatement PreProc
