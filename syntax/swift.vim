@@ -56,6 +56,9 @@ syntax match swiftOperator "\v\?\?"
 " Methods/Functions
 syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
 
+" Swift closure arguments
+syntax match swiftClosureArgument "\$\d\+\(\.\d\+\)\?"
+
 syntax match swiftAvailability "\v((\*(\s*,\s*[a-zA-Z="0-9.]+)*)|(\w+\s+\d+(\.\d+(.\d+)?)?\s*,\s*)+\*)" contains=swiftString
 syntax keyword swiftPlatforms OSX iOS watchOS OSXApplicationExtension iOSApplicationExtension contained containedin=swiftAvailability
 syntax keyword swiftAvailabilityArg renamed unavailable introduced deprecated obsoleted message contained containedin=swiftAvailability
@@ -192,6 +195,7 @@ highlight default link swiftBoolean Boolean
 
 highlight default link swiftOperator Operator
 highlight default link swiftKeywords Keyword
+highlight default link swiftClosureArgument Operator
 highlight default link swiftAttributes PreProc
 highlight default link swiftConditionStatement PreProc
 highlight default link swiftStructure Structure
