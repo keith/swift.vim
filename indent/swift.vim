@@ -132,7 +132,11 @@ function! SwiftIndent(...)
       let openingBracket = searchpair("{", "", "}", "bWn", "s:IsExcludedFromIndent()")
       return indent(openingBracket)
     elseif currentCloseBrackets > currentOpenBrackets
+      let column = col(".")
+      call cursor(line("."), 1)
       let openingBracket = searchpair("{", "", "}", "bWn", "s:IsExcludedFromIndent()")
+      call cursor(line("."), column)
+
       let bracketLine = getline(openingBracket)
 
       let numOpenParensBracketLine = s:NumberOfMatches("(", bracketLine, openingBracket)
