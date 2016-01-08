@@ -92,7 +92,13 @@ function! SwiftIndent(...)
       return -1
     endif
 
-    return indent(openingSquare)
+    " - Line starts with closing square, indent as opening square
+    if line =~ '\v^\s*]'
+      return indent(openingSquare)
+    endif
+
+    " - Line contains closing square and more, indent a level above opening
+    return indent(openingSquare) + shiftwidth()
   endif
 
   if s:IsExcludedFromIndent()

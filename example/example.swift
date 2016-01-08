@@ -314,3 +314,11 @@ guard let path = NSBundle.mainBundle().pathForResource(imageName, ofType: "png")
     let data = NSData(contentsOfFile: path) else
 {
 }
+
+// Indent last line should hold
+self.init(className: "Item", dictionary: [
+    "identifier": item.identifier,
+    "title": item.title,
+    "link": item.link,
+    "date": item.date,
+    "summary": item.summary])
