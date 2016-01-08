@@ -12,7 +12,6 @@ let s:cpo_save = &cpo
 set cpo&vim
 
 setlocal nosmartindent
-setlocal indentkeys-=:
 setlocal indentkeys-=e
 setlocal indentkeys+=0]
 setlocal indentexpr=SwiftIndent()
