@@ -297,6 +297,7 @@ public var `extension`: String?
 This is the comment body
 
 - parameter first: The first parameter
+- Parameter first: The first parameter
 
 - returns: Some value
 */
