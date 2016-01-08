@@ -301,3 +301,5 @@ This is the comment body
 
 - returns: Some value
 */
+
+public let fareEstimate: FareEstimate //= (nil, nil) // comment should be highlighted as comment
