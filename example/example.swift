@@ -305,5 +305,7 @@ This is the comment body
 public let fareEstimate: FareEstimate //= (nil, nil) // comment should be highlighted as comment
 
 // optionalFrom should be highlighted the same way
+// Operator should also be highlighted
 key = map.optionalFrom("string") ?? []
 key = map.optionalFrom("string")
+thing = map.optionalFrom("string") ?? .Fallback
