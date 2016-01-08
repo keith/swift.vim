@@ -309,3 +309,8 @@ public let fareEstimate: FareEstimate //= (nil, nil) // comment should be highli
 key = map.optionalFrom("string") ?? []
 key = map.optionalFrom("string")
 thing = map.optionalFrom("string") ?? .Fallback
+
+guard let path = NSBundle.mainBundle().pathForResource(imageName, ofType: "png"),
+    let data = NSData(contentsOfFile: path) else
+{
+}
