@@ -198,7 +198,7 @@ struct ArgumentList {
     var arguments: String[]
 
     init(argv: UnsafePointer<CString>,
-         count: CInt)
+        count: CInt)
     {
         foo
     }
@@ -224,9 +224,9 @@ func simpleDescription() -> String {
 
 let library = [
     Movie(name: "foo bar",
-          dfasdfsdfdirector: "someone",
-          foo: "bar",
-          bazzzer: "qux")
+        dfasdfsdfdirector: "someone",
+        foo: "bar",
+        bazzzer: "qux")
 ]
 
 
@@ -241,7 +241,7 @@ class MainViewController: UIViewController, UITableViewDataSource {}
 
 @IBAction func changePostFilter(sender: UISegmentedControl) {}
 override func prepareForSegue(segue: UIStoryboardSegue,
-                              sender: AnyObject) {}
+   sender: AnyObject) {}
 override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {}
 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
 lazy var foo : String
@@ -268,8 +268,7 @@ func foo () {
 }
 
 let foo = CGRectMake(0, (5 - 2),
-                     100,
-                     200)
+    100, 200)
 
 
 let dict = [
