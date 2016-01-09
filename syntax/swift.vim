@@ -53,7 +53,7 @@ delfunction s:CommentKeywordMatch
 
 " Literals
 " Strings
-syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolatedWrapper
+syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolatedWrapper oneline
 syntax region swiftInterpolatedWrapper start="\v[^\\]\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString,swiftString
 syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper
 

@@ -312,6 +312,11 @@ thing = map.optionalFrom("string") ?? .Fallback
 // This should not break all highlighting
 print("Copying \(NSProcessInfo().environment["SCRIPT_INPUT_FILE_\(index)"]!)")
 
+// This is multiline garbage
+"foo
+bar
+baz"
+
 guard let path = NSBundle.mainBundle().pathForResource(imageName, ofType: "png"),
     let data = NSData(contentsOfFile: path) else
 {
