@@ -101,10 +101,6 @@ function! SwiftIndent(...)
     return indent(openingSquare) + shiftwidth()
   endif
 
-  if s:IsExcludedFromIndent()
-    return previousIndent
-  endif
-
   if line =~ ":$"
     let switch = search("switch", "bWn")
     return indent(switch)
