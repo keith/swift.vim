@@ -314,6 +314,12 @@ guard let path = NSBundle.mainBundle().pathForResource(imageName, ofType: "png")
 {
 }
 
+UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
+    view.backgroundColor = UIColor.redColor()
+}) { finished in
+    print("indent?")
+}
+
 // Indent last line should hold
 self.init(className: "Item", dictionary: [
     "identifier": item.identifier,

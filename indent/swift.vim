@@ -207,6 +207,11 @@ function! SwiftIndent(...)
       return indent(openingParen) + shiftwidth()
     endif
 
+    " - Previous line has close then open braces, indent previous + 1 'sw'
+    if previous =~ "}.*{"
+      return previousIndent + shiftwidth()
+    endif
+
     let line = line(".")
     let column = col(".")
     call cursor(previousNum, column)
