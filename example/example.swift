@@ -6,9 +6,14 @@ let foo = 5 // another comment
 
 /* this is also a comment */
 
+// If statements so the indented comments are valid
+if foo {
     /* this is an indented comment */
+}
 
+if foo {
     /* this is a multi level indented comment /* you know */ */
+}
 
 // comments check splelling
 
@@ -37,7 +42,9 @@ comment
 
 // MARK: this is a marker
 
+if foo {
     // this is a indented comment
+}
 
 5 // int
 
@@ -318,7 +325,8 @@ bar
 baz"
 
 guard let path = NSBundle.mainBundle().pathForResource(imageName, ofType: "png"),
-    let data = NSData(contentsOfFile: path) else
+let data = NSData(contentsOfFile: path),
+let data = NSData(contentsOfFile: path) else
 {
 }
 
