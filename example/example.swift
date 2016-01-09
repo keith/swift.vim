@@ -309,6 +309,9 @@ key = map.optionalFrom("string") ?? []
 key = map.optionalFrom("string")
 thing = map.optionalFrom("string") ?? .Fallback
 
+// This should not break all highlighting
+print("Copying \(NSProcessInfo().environment["SCRIPT_INPUT_FILE_\(index)"]!)")
+
 guard let path = NSBundle.mainBundle().pathForResource(imageName, ofType: "png"),
     let data = NSData(contentsOfFile: path) else
 {
