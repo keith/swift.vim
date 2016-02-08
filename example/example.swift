@@ -318,6 +318,8 @@ thing = map.optionalFrom("string") ?? .Fallback
 
 // This should not break all highlighting
 print("Copying \(NSProcessInfo().environment["SCRIPT_INPUT_FILE_\(index)"]!)")
+// Neither should this
+return addressParts.count == 2 ? addressParts[1] : "\(addressParts[1]), \(addressParts[2])"
 
 // This is multiline garbage
 "foo
