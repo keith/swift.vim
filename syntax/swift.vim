@@ -210,6 +210,8 @@ syntax keyword swiftDebugIdentifier
       \ __FUNCTION__
       \ __LINE__
 
+syntax keyword swiftLineDirective #setline
+
 syntax region swiftTypeWrapper start="\v:\s*" skip="\s*,\s*$*\s*" end="$\|/"me=e-1 contains=ALLBUT,swiftInterpolatedWrapper transparent
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
 syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=ALL transparent oneline
@@ -263,6 +265,7 @@ highlight default link swiftAvailability Normal
 highlight default link swiftAvailabilityArg Normal
 highlight default link swiftPlatforms Keyword
 highlight default link swiftDebugIdentifier PreProc
+highlight default link swiftLineDirective PreProc
 
 " Force vim to sync at least x lines. This solves the multiline comment not
 " being highlighted issue
