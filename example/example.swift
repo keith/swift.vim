@@ -168,7 +168,10 @@ enum Card : Int {
     case Heart
     case Diamond
     case Club
+    indirect case Foo(a: Card)
 }
+
+let indirect = 5
 
 struct foo : bar {
     switch (foo) {
