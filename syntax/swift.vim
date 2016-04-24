@@ -89,8 +89,9 @@ syntax match swiftOperator "\v\<"
 syntax match swiftOperator "\v\>"
 syntax match swiftOperator "\v\?\?"
 
-" Methods/Functions
+" Methods/Functions/Properties
 syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
+syntax match swiftProperty "\(\.\)\@<=\<\w\+\>(\@!"
 
 " Swift closure arguments
 syntax match swiftClosureArgument "\$\d\+\(\.\d\+\)\?"
@@ -259,6 +260,7 @@ highlight default link swiftType Type
 highlight default link swiftImports Include
 highlight default link swiftPreprocessor PreProc
 highlight default link swiftMethod Function
+highlight default link swiftProperty Identifier
 
 highlight default link swiftConditionStatement PreProc
 highlight default link swiftAvailability Normal
