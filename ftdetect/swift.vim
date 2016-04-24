@@ -1,4 +1,4 @@
-autocmd BufNewFile,BufRead *.swift setfiletype swift
+autocmd BufNewFile,BufRead *.swift set filetype=swift
 autocmd BufRead * call s:Swift()
 function! s:Swift()
   if !empty(&filetype)
