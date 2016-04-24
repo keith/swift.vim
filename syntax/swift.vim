@@ -127,7 +127,6 @@ syntax keyword swiftKeywords
       \ if
       \ import
       \ in
-      \ indirect
       \ infix
       \ init
       \ inout
@@ -165,6 +164,8 @@ syntax keyword swiftKeywords
       \ where
       \ while
       \ willSet
+
+syntax match swiftMultiwordKeywords "indirect case"
 " }}}
 
 " Names surrounded by backticks. This aren't limited to keywords because 1)
@@ -252,6 +253,7 @@ highlight default link swiftBoolean Boolean
 highlight default link swiftOperator Operator
 highlight default link swiftCastKeyword Keyword
 highlight default link swiftKeywords Keyword
+highlight default link swiftMultiwordKeywords Keyword
 highlight default link swiftEscapedReservedWord Normal
 highlight default link swiftClosureArgument Operator
 highlight default link swiftAttributes PreProc
