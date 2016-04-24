@@ -102,7 +102,6 @@ syntax keyword swiftAvailabilityArg renamed unavailable introduced deprecated ob
 
 " Keywords {{{
 syntax keyword swiftKeywords
-      \ as
       \ associatedtype
       \ atexit
       \ break
@@ -133,7 +132,6 @@ syntax keyword swiftKeywords
       \ init
       \ inout
       \ internal
-      \ is
       \ lazy
       \ let
       \ mutating
@@ -214,13 +212,14 @@ syntax keyword swiftDebugIdentifier
 syntax keyword swiftLineDirective #setline
 
 syntax region swiftTypeWrapper start="\v:\s*" skip="\s*,\s*$*\s*" end="$\|/"me=e-1 contains=ALLBUT,swiftInterpolatedWrapper transparent
+syntax region swiftTypeCastWrapper start="\(as\|is\)\(!\|?\)\=\s\+" end="\v(\s|$|\{)" contains=swiftType,swiftCastKeyword keepend transparent oneline
 syntax region swiftGenericsWrapper start="\v\<" end="\v\>" contains=swiftType transparent oneline
 syntax region swiftLiteralWrapper start="\v\=\s*" skip="\v[^\[\]]\(\)" end="\v(\[\]|\(\))" contains=ALL transparent oneline
 syntax region swiftReturnWrapper start="\v-\>\s*" end="\v(\{|$)" contains=swiftType transparent oneline
-syntax match swiftType "\v<\u\w*" contained containedin=swiftGenericsWrapper,swiftTypeWrapper,swiftLiteralWrapper,swiftGenericsWrapper
+syntax match swiftType "\v<\u\w*" contained containedin=swiftTypeWrapper,swiftLiteralWrapper,swiftGenericsWrapper,swiftTypeCastWrapper
 
 syntax keyword swiftImports import
-
+syntax keyword swiftCastKeyword is as contained
 
 " 'preprocesor' stuff
 syntax keyword swiftPreprocessor
@@ -251,6 +250,7 @@ highlight default link swiftNumber Number
 highlight default link swiftBoolean Boolean
 
 highlight default link swiftOperator Operator
+highlight default link swiftCastKeyword Keyword
 highlight default link swiftKeywords Keyword
 highlight default link swiftEscapedReservedWord Normal
 highlight default link swiftClosureArgument Operator

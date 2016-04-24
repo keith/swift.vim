@@ -345,3 +345,5 @@ self.init(className: "Item", dictionary: [
     "link": item.link,
     "date": item.date,
     "summary": item.summary])
+
+XCAssertEqual(variables as NSDictionary, expectedVariables as NSDictionary, "\(template)")
