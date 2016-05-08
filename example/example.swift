@@ -58,14 +58,17 @@ if foo {
 
 0xa2ef // hex
 0x123P432
+0xa_2ef // hex with underscore
 0x13p-43
 0x13r-43
 0x213zdf // broken hex
 
 0b10101 // binary
+0b1010_1 // binary with underscore
 0b1234 // broken binary
 
 0o567 // octal
+0o56_7 // octal with underscore
 0o5689 // broken octal
 
 1_000_000                // underscore separated million
