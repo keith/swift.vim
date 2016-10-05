@@ -19,7 +19,7 @@ function! SyntaxCheckers_swift_swiftpm_IsAvailable() dict
     return 0
   endif
 
-  return filereadable('Package.swift')
+  return filereadable(findfile("Package.swift", ".;"))
 endfunction
 
 function! SyntaxCheckers_swift_swiftpm_GetLocList() dict

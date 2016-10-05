@@ -12,7 +12,7 @@ function! SyntaxCheckers_swift_swiftlint_IsAvailable() dict
   endif
 
   return get(g:, 'syntastic_swift_swiftlint_use_defaults', 0)
-        \ || filereadable('.swiftlint.yml')
+        \ || filereadable(findfile("Package.swift", ".;"))
 endfunction
 
 function! SyntaxCheckers_swift_swiftlint_GetLocList() dict
