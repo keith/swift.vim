@@ -133,6 +133,23 @@ let b = 50 /= 20
 ||=
 ~=
 
+// Custom Operators
+infix operator ～ {
+    precedence 20      // Define precedence
+    associativity none // Define associativity
+}
+
+func ～(n: Int, w: Int) -> String {
+    var str = String(n)
+    let pad = w - str.characters.count
+    if pad > 0 {
+        str = String(count: pad,
+                repeatedValue: Character(" ")) + str
+    }
+
+    return str
+}
+
 true
 false
 
