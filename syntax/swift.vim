@@ -179,6 +179,7 @@ syntax keyword swiftAttributes
       \ @autoclosure
       \ @available
       \ @convention
+      \ @discardableResult
       \ @exported
       \ @IBAction
       \ @IBDesignable
