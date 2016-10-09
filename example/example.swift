@@ -133,6 +133,12 @@ let b = 50 /= 20
 ||=
 ~=
 
+// Custom Operators
+infix operator ～ {
+    precedence 20      // Define precedence
+    associativity none // Define associativity
+}
+
 true
 false
 
