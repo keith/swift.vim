@@ -143,6 +143,7 @@ syntax keyword swiftKeywords
       \ override
       \ postfix
       \ precedence
+      \ precedencegroup
       \ prefix
       \ private
       \ protocol
