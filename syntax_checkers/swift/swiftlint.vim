@@ -16,11 +16,9 @@ function! SyntaxCheckers_swift_swiftlint_IsAvailable() dict
 endfunction
 
 function! SyntaxCheckers_swift_swiftlint_GetLocList() dict
-  let env_vars = 'SCRIPT_INPUT_FILE_COUNT=1 SCRIPT_INPUT_FILE_0=' . syntastic#util#shexpand('%:p')
   let makeprg = self.makeprgBuild({
-        \ 'exe_before': env_vars,
-        \ 'fname': '',
-        \ 'args': 'lint --use-script-input-files' })
+        \ 'args': 'lint --use-script-input-files',
+        \ 'fname': '' })
 
   let errorformat =
         \ '%f:%l:%c: %trror: %m,' .
@@ -28,11 +26,10 @@ function! SyntaxCheckers_swift_swiftlint_GetLocList() dict
         \ '%f:%l: %trror: %m,' .
         \ '%f:%l: %tarning: %m'
 
-  let env = {}
-  " let env = {
-  "       \ 'SCRIPT_INPUT_FILE_COUNT': 1,
-  "       \ 'SCRIPT_INPUT_FILE_0': syntastic#util#shexpand('%:p'),
-  "       \ }
+  let env = {
+        \ 'SCRIPT_INPUT_FILE_COUNT': 1,
+        \ 'SCRIPT_INPUT_FILE_0': expand('%:p'),
+        \ }
 
   return SyntasticMake({
         \ 'makeprg': makeprg,
