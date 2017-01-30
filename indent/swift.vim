@@ -93,7 +93,7 @@
 "
 "   - When a closing `>` bracket appears at the start of a line, it will always
 "     be indented as though it were an operator rather than indented in a manner
-"     that matches situations in which other sorts of brackets appaer at the
+"     that matches situations in which other sorts of brackets appear at the
 "     beginning of a line.
 "
 "   - This plugin might help you detect syntactic errors in your code, but it is
