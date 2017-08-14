@@ -186,6 +186,7 @@ syntax keyword swiftAttributes
       \ @available
       \ @convention
       \ @discardableResult
+      \ @escaping
       \ @exported
       \ @IBAction
       \ @IBDesignable
