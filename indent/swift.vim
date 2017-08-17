@@ -49,7 +49,7 @@ endfunction
 
 function! s:IsCommentLine(lnum)
     return synIDattr(synID(a:lnum,
-          \     match(getline(a:lnum), "\S") + 1, 0), "name")
+          \     match(getline(a:lnum), "\\S") + 1, 0), "name")
           \ ==# "swiftComment"
 endfunction
 
