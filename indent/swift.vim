@@ -225,8 +225,8 @@ function! SwiftIndent(...)
   if numOpenParens > 0
     let savePosition = getcurpos()
     " Must be at EOL because open paren has to be above (left of) the cursor
-    call cursor(previousNum, col("$"))
-    let previousParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
+    call cursor(previousNum, [previousNum, col("$")])
+    let previousParen = searchpair("(", "", ")", "cbWn", "s:IsExcludedFromIndent()")
     call setpos(".", savePosition)
     return indent(previousParen) + shiftwidth()
   endif
