@@ -54,8 +54,8 @@ delfunction s:CommentKeywordMatch
 " Literals
 " Strings
 syntax region swiftString start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=swiftInterpolatedWrapper oneline
-syntax region swiftInterpolatedWrapper start="\v[^\\]\zs\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString,swiftString oneline
-syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper oneline
+syntax region swiftInterpolatedWrapper start="\v[^\\]\zs\\\(\s*" end="\v\s*\)" contained containedin=swiftString contains=swiftInterpolatedString,swiftString,swiftDebugIdentifier oneline
+syntax match swiftInterpolatedString "\v\w+(\(\))?" contained containedin=swiftInterpolatedWrapper
 
 " Numbers
 syntax match swiftNumber "\v<\d+>"
@@ -209,16 +209,7 @@ syntax keyword swiftStructure
       \ struct
       \ enum
 
-syntax keyword swiftDebugIdentifier
-      \ #column
-      \ #file
-      \ #function
-      \ #line
-      \ __COLUMN__
-      \ __FILE__
-      \ __FUNCTION__
-      \ __LINE__
-
+syntax match swiftDebugIdentifier "#column\|#file\|#function\|#line\|__COLUMN__\|__FILE__\|__FUNCTION__\|__LINE__"
 syntax keyword swiftLineDirective #setline
 
 syntax region swiftTypeWrapper start="\v:\s*" skip="\s*,\s*$*\s*" end="$\|/"me=e-1 contains=ALLBUT,swiftInterpolatedWrapper transparent

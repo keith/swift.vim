@@ -359,3 +359,4 @@ self.init(className: "Item", dictionary: [
     "summary": item.summary])
 
 XCAssertEqual(variables as NSDictionary, expectedVariables as NSDictionary, "\(template)")
+print("Called from \(#file)\(#line) in \(__COLUMN__)")
