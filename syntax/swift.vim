@@ -90,8 +90,8 @@ syntax match swiftOperator "\v\>"
 syntax match swiftOperator "\v\?\?"
 
 " Methods/Functions/Properties
-syntax match swiftMethod "\(\.\)\@<=\w\+\((\)\@="
-syntax match swiftProperty "\(\.\)\@<=\<\w\+\>(\@!"
+syntax match swiftMethod "\.\@<=\<\D\w*\>\ze("
+syntax match swiftProperty "\.\@<=\<\D\w*\>(\@!"
 
 " Swift closure arguments
 syntax match swiftClosureArgument "\$\d\+\(\.\d\+\)\?"
