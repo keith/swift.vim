@@ -360,3 +360,12 @@ self.init(className: "Item", dictionary: [
     "summary": item.summary])
 
 XCAssertEqual(variables as NSDictionary, expectedVariables as NSDictionary, "\(template)")
+
+NSWorkspace.sharedWorkspace().notificationCenter.addObserver(
+    self, selector: #selector(self.activeApplicationChanged(_:)),
+    name: NSWorkspaceDidActivateApplicationNotification, object: nil
+)
+
+public func find(closure: @noescape Element throws -> Bool) rethrows -> Element? {
+
+}
