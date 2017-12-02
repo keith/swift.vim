@@ -34,6 +34,11 @@ comment
 "this is a string no splell checking"
 "this is a string\" with an escaped quote"
 
+"""
+this is a multiline string
+\(1)
+"""
+
 // TODO: This is a todo comment
 // XXX: This is another todo comment
 // FIXME: this is another todo comment
