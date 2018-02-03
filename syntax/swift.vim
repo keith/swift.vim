@@ -1,7 +1,6 @@
 " File: swift.vim
 " Author: Keith Smiley
 " Description: Runtime files for Swift
-" Last Modified: June 15, 2014
 
 if exists("b:current_syntax")
   finish
