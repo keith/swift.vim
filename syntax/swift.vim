@@ -239,6 +239,8 @@ syntax keyword swiftPreprocessor
       \ #else
       \ #endif
       \ #selector
+      \ #warning
+      \ #error
 
 
 " Comment patterns
