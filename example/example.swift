@@ -223,7 +223,7 @@ struct ArgumentList {
     var arguments: String[]
 
     init(argv: UnsafePointer<CString>,
-        count: CInt)
+         count: CInt)
     {
         foo
     }
@@ -249,9 +249,9 @@ func simpleDescription() -> String {
 
 let library = [
     Movie(name: "foo bar",
-        dfasdfsdfdirector: "someone",
-        foo: "bar",
-        bazzzer: "qux")
+          dfasdfsdfdirector: "someone",
+          foo: "bar",
+          bazzzer: "qux")
 ]
 
 
@@ -266,7 +266,9 @@ class MainViewController: UIViewController, UITableViewDataSource {}
 
 @IBAction func changePostFilter(sender: UISegmentedControl) {}
 override func prepareForSegue(segue: UIStoryboardSegue,
-   sender: AnyObject) {}
+                              sender: AnyObject) {}
+override func prepareForSegue(
+    segue: UIStoryboardSegue, sender: AnyObject) {}
 override func prepareForSegue(segue: UIStoryboardSegue!, sender: AnyObject!) {}
 override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {}
 lazy var foo : String
@@ -293,7 +295,7 @@ func foo () {
 }
 
 let foo = CGRectMake(0, (5 - 2),
-    100, 200)
+                     100, 200)
 
 
 let dict = [
@@ -351,10 +353,10 @@ let data = NSData(contentsOfFile: path) else
 }
 
 UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
-    view.backgroundColor = UIColor.redColor()
-}) { finished in
-    print("indent?")
-}
+                               view.backgroundColor = UIColor.redColor()
+                           }, completion: { finished in
+                               print("indent?")
+                           })
 
 // Indent last line should hold
 self.init(className: "Item", dictionary: [
@@ -374,3 +376,16 @@ NSWorkspace.sharedWorkspace().notificationCenter.addObserver(
 public func find(closure: @noescape Element throws -> Bool) rethrows -> Element? {
 
 }
+
+UIView.animate(withDuration: 0.2, animations: {
+                   self.foo.alpha = 1.0
+                   self.bar.alpha = 1.0
+               }, completion: { _ in
+                   completion()
+               })
+
+A.b().application(
+    application, didFinishLaunchingWithOptions: launchOptions)
+
+A.application(b(),
+              application, didFinishLaunchingWithOptions: launchOptions)
