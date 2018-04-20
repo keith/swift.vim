@@ -138,6 +138,7 @@ syntax keyword swiftKeywords
       \ mutating
       \ nil
       \ nonmutating
+      \ open
       \ operator
       \ optional
       \ override
