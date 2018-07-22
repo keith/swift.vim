@@ -25,7 +25,7 @@ function! ale_linters#swift#swiftpm#Handle(buffer, lines)
   " Match and capture line number
   " Match and capture column number
   " Match and capture anything in the message
-  let l:pattern = '^[^:]\+:\(\d\+\):\(\d\+\):\s*error:\s*\(.*\)$'
+  let l:pattern = '^[^:]\+:\(\d\+\):\(\d\+\):\s*\(error\|warning\):\s*\(.*\)$'
   let l:output = []
 
   for l:line in a:lines
@@ -37,7 +37,15 @@ function! ale_linters#swift#swiftpm#Handle(buffer, lines)
 
     let l:line_number = l:match[1]
     let l:column = l:match[2]
-    let l:text = l:match[3]
+    let l:type = l:match[3]
+    let l:text = l:match[4]
+    let l:type_identifier = 'N'
+
+    if l:type == 'error'
+      let l:type_identifier = 'E'
+    elseif l:type == 'warning'
+      let l:type_identifier = 'W'
+    endif
 
     call add(l:output, {
           \ 'bufnr': a:buffer,
@@ -45,7 +53,7 @@ function! ale_linters#swift#swiftpm#Handle(buffer, lines)
           \ 'vcol': 0,
           \ 'col': l:column,
           \ 'text': l:text,
-          \ 'type': 'E',
+          \ 'type': l:type_identifier,
         \ })
   endfor
 
