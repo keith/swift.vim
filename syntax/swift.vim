@@ -154,6 +154,7 @@ syntax keyword swiftKeywords
       \ return
       \ self
       \ set
+      \ some
       \ static
       \ subscript
       \ super
