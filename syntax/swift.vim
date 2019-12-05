@@ -185,6 +185,7 @@ syntax region swiftEscapedReservedWord start="`" end="`" oneline
 syntax keyword swiftAttributes
       \ @_exported
       \ @_functionBuilder
+      \ @_implementationOnly
       \ @_silgen_name
       \ @assignment
       \ @autoclosure
