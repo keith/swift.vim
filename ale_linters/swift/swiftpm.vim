@@ -62,8 +62,8 @@ endfunction
 
 call ale#linter#Define('swift', {
       \ 'name': 'swiftpm',
-      \ 'executable_callback': 'ale_linters#swift#swiftpm#GetExecutable',
-      \ 'command_callback': 'ale_linters#swift#swiftpm#GetCommand',
+      \ 'executable': 'ale_linters#swift#swiftpm#GetExecutable',
+      \ 'command': 'ale_linters#swift#swiftpm#GetCommand',
       \ 'callback': 'ale_linters#swift#swiftpm#Handle',
       \ 'lint_file': 1,
     \ })
