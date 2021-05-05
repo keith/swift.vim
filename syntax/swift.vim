@@ -208,6 +208,7 @@ syntax keyword swiftAttributes
       \ @NSManaged
       \ @objc
       \ @propertyWrapper
+      \ @resultBuilder
       \ @testable
       \ @UIApplicationMain
       \ @usableFromInline
