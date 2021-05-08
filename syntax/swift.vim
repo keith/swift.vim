@@ -219,8 +219,9 @@ syntax keyword swiftAttributes
 syntax keyword swiftConditionStatement #available
 
 syntax keyword swiftStructure
-      \ struct
+      \ actor
       \ enum
+      \ struct
 
 syntax keyword swiftDebugIdentifier
       \ #column
