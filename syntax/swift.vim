@@ -105,6 +105,7 @@ syntax keyword swiftKeywords
       \ associatedtype
       \ associativity
       \ atexit
+      \ await
       \ break
       \ case
       \ catch
@@ -170,6 +171,7 @@ syntax keyword swiftKeywords
       \ willSet
 
 syntax keyword swiftDefinitionModifier
+      \ async
       \ rethrows
       \ throws
 
