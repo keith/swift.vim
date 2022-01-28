@@ -211,6 +211,7 @@ syntax keyword swiftAttributes
       \ @NSCopying
       \ @NSManaged
       \ @objc
+      \ @preconcurrency
       \ @propertyWrapper
       \ @resultBuilder
       \ @Sendable
