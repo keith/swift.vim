@@ -136,10 +136,12 @@ syntax keyword swiftKeywords
       \ init
       \ inout
       \ internal
+      \ isolated
       \ lazy
       \ let
       \ mutating
       \ nil
+      \ nonisolated
       \ nonmutating
       \ open
       \ operator
