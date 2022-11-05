@@ -103,6 +103,7 @@ syntax keyword swiftAvailabilityArg renamed unavailable introduced deprecated ob
 " Keywords {{{
 syntax keyword swiftKeywords
       \ actor
+      \ any
       \ associatedtype
       \ associativity
       \ async
