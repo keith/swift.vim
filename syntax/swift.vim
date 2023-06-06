@@ -109,18 +109,23 @@ syntax keyword swiftKeywords
       \ async
       \ atexit
       \ await
+      \ borrowing
       \ break
       \ case
       \ catch
       \ class
+      \ consume
+      \ consuming
       \ continue
       \ convenience
       \ default
       \ defer
       \ deinit
       \ didSet
+      \ discard
       \ do
       \ dynamic
+      \ each
       \ else
       \ extension
       \ fallthrough
@@ -149,6 +154,7 @@ syntax keyword swiftKeywords
       \ operator
       \ optional
       \ override
+      \ package
       \ postfix
       \ precedence
       \ precedencegroup
@@ -203,6 +209,7 @@ syntax keyword swiftAttributes
       \ @_spi
       \ @AppStorage
       \ @assignment
+      \ @attached
       \ @autoclosure
       \ @available
       \ @Binding
@@ -215,6 +222,7 @@ syntax keyword swiftAttributes
       \ @FetchRequest
       \ @FocusedBinding
       \ @FocusedValue
+      \ @freestanding
       \ @frozen
       \ @GestureState
       \ @IBAction
