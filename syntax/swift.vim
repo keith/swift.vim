@@ -242,6 +242,7 @@ syntax keyword swiftAttributes
       \ @NSCopying
       \ @NSManaged
       \ @objc
+      \ @objcMembers
       \ @ObservedObject
       \ @preconcurrency
       \ @propertyWrapper
@@ -258,6 +259,7 @@ syntax keyword swiftAttributes
       \ @UIApplicationMain
       \ @unchecked
       \ @usableFromInline
+      \ @ViewBuilder
 
 syntax keyword swiftConditionStatement
       \ #available
