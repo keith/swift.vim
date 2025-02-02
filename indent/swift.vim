@@ -147,6 +147,9 @@ function! SwiftIndent(...)
         call cursor(line, column)
         return openingParenCol
       endif
+      if numOpenParensBracketLine == 0 && numCloseParensBracketLine == 0
+        return indent(openingBracket) + shiftwidth()
+      endif
 
       return indent(openingBracket)
     elseif currentCloseBrackets > currentOpenBrackets
