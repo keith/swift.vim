@@ -147,6 +147,9 @@ function! SwiftIndent(...)
         call cursor(line, column)
         return openingParenCol
       endif
+      if numOpenParensBracketLine == 0 && numCloseParensBracketLine == 0
+        return indent(openingBracket) + shiftwidth()
+      endif
 
       return indent(openingBracket)
     elseif currentCloseBrackets > currentOpenBrackets
@@ -184,6 +187,16 @@ function! SwiftIndent(...)
       let openingParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
       call cursor(line, column)
       return indent(openingParen)
+    elseif line =~ '^\s*\.' && previous !~ '^\s*\.' && numOpenParens > 0
+      return previousIndent + shiftwidth()
+    elseif previous =~ '^\s*\.'
+      if s:IsCommentLine(clnum) != 0
+        return previousIndent - shiftwidth()
+      elseif line =~ '^\s*\.'
+        return previousIndent
+      else
+        return previousIndent - shiftwidth()
+      endif
     else
       " - Current line is blank, and the user presses 'o'
       return previousIndent

@@ -54,13 +54,13 @@ class MainViewController: UIViewController, UITableViewDataSource {
                     self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: .Fade)
                     self.refreshControl.endRefreshing()
                     UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-                })
+                               })
             } else {
                 println("Could not fetch posts!")
                 self.refreshControl.endRefreshing()
                 UIApplication.sharedApplication().networkActivityIndicatorVisible = false;
             }
-        })
+                                                      })
     }
 
     func stylePostCellAsRead(cell: UITableViewCell) {
