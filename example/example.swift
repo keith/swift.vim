@@ -389,3 +389,34 @@ A.b().application(
 
 A.application(b(),
               application, didFinishLaunchingWithOptions: launchOptions)
+
+struct Foo {
+    func callee(delegate1: () -> Void, delegate2: () -> Void) {
+        delegate1()
+        delegate2()
+    }
+    func caller1() {
+        callee(delegate1: {
+                   print("caller1 delegate1")
+               }) {
+                   print("caller1 delegate2")
+        }
+    }
+    func caller2() {
+        callee(delegate1: {
+                   print("caller1 delegate1")
+               }, delegate2: {
+                   print("caller1 delegate2")
+               })
+    }
+    func caller3() {
+        callee(delegate1: {
+                   print("caller1 delegate1")
+               }, delegate2: {
+                   print([0, 1].map {
+                             $0 + 1
+                         })
+                   print("caller1 delegate2")
+               })
+    }
+}
