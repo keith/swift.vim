@@ -51,6 +51,20 @@ function! s:IsSyntaxNameExcludedFromIndent(name)
   return a:name ==# "swiftComment" || a:name ==# "swiftString" || a:name ==# "swiftInterpolatedWrapper" || a:name ==# "swiftMultilineInterpolatedWrapper" || a:name ==# "swiftMultilineString"
 endfunction
 
+" Description: Search for the position of the opening parenthesis '(' starting from the specified position.
+" Parameters:
+"   startingPosition - A list [line_number, column_number] representing the position to start the search.
+" Returns: A list [line_number, column_number] representing the position of the opening parenthesis.
+function! s:SearchOpeningParenPos(startingPosition)
+  let currentLine = line(".")
+  let currentColumn = col(".")
+  call cursor(a:startingPosition[0], a:startingPosition[1])
+  let openingParen = searchpairpos("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
+  call cursor(currentLine, currentColumn)
+  return openingParen
+endfunction
+
+
 function! s:IsCommentLine(lnum)
     return synIDattr(synID(a:lnum,
           \     match(getline(a:lnum), "\\S") + 1, 0), "name")
@@ -164,19 +178,11 @@ function! SwiftIndent(...)
       let numOpenParensBracketLine = s:NumberOfMatches("(", bracketLine, openingBracket)
       let numCloseParensBracketLine = s:NumberOfMatches(")", bracketLine, openingBracket)
       if numCloseParensBracketLine > numOpenParensBracketLine
-        let line = line(".")
-        let column = col(".")
-        call cursor(openingParen, column)
-        let openingParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
-        call cursor(line, column)
-        return indent(openingParen)
+        let openingParenPos = s:SearchOpeningParenPos([openingBracket, 1])
+        return indent(openingParenPos[0])
       elseif numOpenParensBracketLine > numCloseParensBracketLine
-        let line = line(".")
-        let column = col(".")
-        call cursor(openingParen, column)
-        let openingParenCol = searchpairpos("(", "", ")", "bWn", "s:IsExcludedFromIndent()")[1]
-        call cursor(line, column)
-        return openingParenCol
+        let openingParenPos = s:SearchOpeningParenPos([line("."), col(".")])
+        return openingParenPos[1]
       endif
 
       return indent(openingBracket)
