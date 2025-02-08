@@ -21,11 +21,11 @@ function! ale_linters#swift#swiftpm#GetCommand(buffer)
 endfunction
 
 function! ale_linters#swift#swiftpm#Handle(buffer, lines)
-  " Match and ignore file path (anything but :)
+  " Match and capture file path (anything but :)
   " Match and capture line number
   " Match and capture column number
   " Match and capture anything in the message
-  let l:pattern = '^[^:]\+:\(\d\+\):\(\d\+\):\s*\(error\|warning\):\s*\(.*\)$'
+  let l:pattern = '^\([^:]\+\):\(\d\+\):\(\d\+\):\s*\(error\|warning\):\s*\(.*\)$'
   let l:output = []
 
   for l:line in a:lines
@@ -35,10 +35,11 @@ function! ale_linters#swift#swiftpm#Handle(buffer, lines)
       continue
     endif
 
-    let l:line_number = l:match[1]
-    let l:column = l:match[2]
-    let l:type = l:match[3]
-    let l:text = l:match[4]
+    let l:file_path = l:match[1]
+    let l:line_number = l:match[2]
+    let l:column = l:match[3]
+    let l:type = l:match[4]
+    let l:text = l:match[5]
     let l:type_identifier = 'N'
 
     if l:type == 'error'
@@ -47,14 +48,16 @@ function! ale_linters#swift#swiftpm#Handle(buffer, lines)
       let l:type_identifier = 'W'
     endif
 
-    call add(l:output, {
-          \ 'bufnr': a:buffer,
-          \ 'lnum': l:line_number,
-          \ 'vcol': 0,
-          \ 'col': l:column,
-          \ 'text': l:text,
-          \ 'type': l:type_identifier,
-        \ })
+    if l:file_path == expand('%:p')
+      call add(l:output, {
+            \ 'bufnr': a:buffer,
+            \ 'lnum': l:line_number,
+            \ 'vcol': 0,
+            \ 'col': l:column,
+            \ 'text': l:text,
+            \ 'type': l:type_identifier,
+          \ })
+    endif
   endfor
 
   return l:output
