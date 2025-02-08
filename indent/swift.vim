@@ -56,11 +56,10 @@ endfunction
 "   startingPosition - A list [line_number, column_number] representing the position to start the search.
 " Returns: A list [line_number, column_number] representing the position of the opening parenthesis.
 function! s:SearchOpeningParenPos(startingPosition)
-  let currentLine = line(".")
-  let currentColumn = col(".")
+  let currentPos = getpos(".")
   call cursor(a:startingPosition[0], a:startingPosition[1])
   let openingParen = searchpairpos("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
-  call cursor(currentLine, currentColumn)
+  call cursor(".", currentPos)
   return openingParen
 endfunction
 
