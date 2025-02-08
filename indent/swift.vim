@@ -132,9 +132,6 @@ function! s:SearchBackwardLineOrBlock(lnum, pattern)
       while lnum > 0 && s:IsCommentLine(lnum) != 0
         let lnum = prevnonblank(lnum - 1)
       endwhile
-      if !lnum
-        break
-      endif
     endif
   endwhile
 
