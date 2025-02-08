@@ -138,6 +138,27 @@ function! s:SearchBackwardLineOrBlock(lnum, pattern)
   return lnum
 endfunction
 
+" Descriptions: Checks whether the line or block incluing the given line number matches a specified pattern.
+" Paramters:
+"   lnum    - (number) The line number to analyze and check for a match.
+"   pattern - (string) The pattern to evaluate against the line or block.
+" Returns:
+"   (number) 1 if the line matches the pattern, 0 otherwise.
+function! s:IsMatchingLineOrBlock(lnum, pattern)
+  let currentPos = getpos(".")
+  call s:CursorToBlockStart(a:lnum)
+  let line = getline(".")
+  let matched = line =~ a:pattern
+  call cursor(".", currentPos)
+  return matched
+endfunction
+
+function! s:IsCommentLine(lnum)
+    return synIDattr(synID(a:lnum,
+          \     match(getline(a:lnum), "\\S") + 1, 0), "name")
+          \ ==# "swiftComment"
+endfunction
+
 " Description: Determines the indentation level for a line that start with a dot.
 " Parameters:
 "   line              - (string) The content of the current line.
@@ -175,27 +196,6 @@ function! DotIndent(line, previous, previousNum, previousIndent, numCloseBracket
   else
     return -1
   endif
-endfunction
-
-" Descriptions: Checks whether the line or block incluing the given line number matches a specified pattern.
-" Paramters:
-"   lnum    - (number) The line number to analyze and check for a match.
-"   pattern - (string) The pattern to evaluate against the line or block.
-" Returns:
-"   (number) 1 if the line matches the pattern, 0 otherwise.
-function! s:IsMatchingLineOrBlock(lnum, pattern)
-  let currentPos = getpos(".")
-  call s:CursorToBlockStart(a:lnum)
-  let line = getline(".")
-  let matched = line =~ a:pattern
-  call cursor(".", currentPos)
-  return matched
-endfunction
-
-function! s:IsCommentLine(lnum)
-    return synIDattr(synID(a:lnum,
-          \     match(getline(a:lnum), "\\S") + 1, 0), "name")
-          \ ==# "swiftComment"
 endfunction
 
 function! SwiftIndent(...)
