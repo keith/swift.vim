@@ -56,19 +56,146 @@ endfunction
 "   startingPosition - A list [line_number, column_number] representing the position to start the search.
 " Returns: A list [line_number, column_number] representing the position of the opening parenthesis.
 function! s:SearchOpeningParenPos(startingPosition)
-  let currentLine = line(".")
-  let currentColumn = col(".")
+  let currentPos = getpos(".")
   call cursor(a:startingPosition[0], a:startingPosition[1])
   let openingParen = searchpairpos("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
-  call cursor(currentLine, currentColumn)
+  call cursor(".", currentPos)
   return openingParen
 endfunction
 
+" Description: Moves the cursor to the start of a code block (parentheses or brackets) based on the given line number.
+" Arguments:
+"   a:lnum - (number) The line number to analyze and start searching from.
+" Returns:
+"   (number) The line number of the block's start position, or the input line number if no block structure is detected. 0 if no opening parenthesis or bracket found.
+" Notes:
+"   - The cursor position is updated during execution. Ensure that the caller saves and restores the cursor position if necessary."
+function! s:CursorToBlockStart(lnum)
+  let line = getline(a:lnum)
+  let numOpenBrackets = s:NumberOfMatches("{", line, a:lnum)
+  let numCloseBrackets = s:NumberOfMatches("}", line, a:lnum)
+  let numOpenParens = s:NumberOfMatches("(", line, a:lnum)
+  let numCloseParens = s:NumberOfMatches(")", line, a:lnum)
+
+  if numCloseParens > numOpenParens || numCloseBrackets > numOpenBrackets
+    " Return outer opening parenthesis or bracket line number.
+    let lastCloseBracketCol = strridx(line, '}')
+    let lastCloseParenCol = strridx(line, ')')
+    if lastCloseParenCol > lastCloseBracketCol
+      call cursor(a:lnum, lastCloseParenCol)
+      let blockStartLnum = searchpair("(", "", ")", "bW", "s:IsExcludedFromIndent()")
+      return blockStartLnum
+    else
+      call cursor(a:lnum, lastCloseBracketCol)
+      let blockStartLnum = searchpair("{", "", "}", "bW", "s:IsExcludedFromIndent()")
+      return blockStartLnum
+    endif
+  elseif line =~ '}.*{'
+    " Return opening bracket line number.
+    let lastCloseBracketCol = strridx(line, '}')
+    call cursor(line("."), lastCloseBracketCol)
+    let blockStartPosition = searchpair("{", "", "}", "bW", "s:IsExcludedFromIndent()")
+    return blockStartLnum
+  else
+    " No block found. Return input line number.
+    call cursor(a:lnum, "0")
+    return a:lnum
+  endif
+endfunction
+
+" Descriptions: Searches backward from a given line number to find a line or block that matches a specified pattern.
+" Parameters:
+"   lnum    - (number) The starting line number for the search.
+"   pattern - (string) The pattern to search for in each line.
+" Returns:
+"   (number) The line number where the pattern is found, or 0 if no match is found.
+function! s:SearchBackwardLineOrBlock(lnum, pattern)
+  let currentPos = getpos(".")
+
+  let lnum = a:lnum
+  while lnum > 0
+    let lnum = s:CursorToBlockStart(lnum)
+    if !lnum
+      break
+    endif
+    let line = getline(lnum)
+    if line =~ a:pattern
+      " Return matched line number
+      break
+    else
+      " Continue from previous line
+      let lnum = prevnonblank(lnum - 1)
+      if !lnum
+        break
+      endif
+      while lnum > 0 && s:IsCommentLine(lnum) != 0
+        let lnum = prevnonblank(lnum - 1)
+      endwhile
+    endif
+  endwhile
+
+  call cursor(".", currentPos)
+  return lnum
+endfunction
+
+" Descriptions: Checks whether the line or block incluing the given line number matches a specified pattern.
+" Paramters:
+"   lnum    - (number) The line number to analyze and check for a match.
+"   pattern - (string) The pattern to evaluate against the line or block.
+" Returns:
+"   (number) 1 if the line matches the pattern, 0 otherwise.
+function! s:IsMatchingLineOrBlock(lnum, pattern)
+  let currentPos = getpos(".")
+  call s:CursorToBlockStart(a:lnum)
+  let line = getline(".")
+  let matched = line =~ a:pattern
+  call cursor(".", currentPos)
+  return matched
+endfunction
 
 function! s:IsCommentLine(lnum)
     return synIDattr(synID(a:lnum,
           \     match(getline(a:lnum), "\\S") + 1, 0), "name")
           \ ==# "swiftComment"
+endfunction
+
+" Description: Determines the indentation level for a line that start with a dot.
+" Parameters:
+"   line              - (string) The content of the current line.
+"   previous          - (string) The content of the previous line.
+"   previousNum       - (number) The line number of the previous line.
+"   previousIndent    - (number) The indentation level of the previous line.
+"   numCloseBrackets  - (number) The count of closing brackets ('}') on the previous line.
+"   numOpenBrackets   - (number) The count of opening brackets ('{') on the previous line.
+"   numCloseParens    - (number) The count of closing parentheses (')') on the previous line.
+"   numOpenParens     - (number) The count of opening parentheses ('(') on the previous line.
+"   clnum             - (number) The current line number being analyzed.
+" Returns:
+"   (number) The calculated indentation level for the current line. 0 if no condition is satisfied.
+function! DotIndent(line, previous, previousNum, previousIndent, numCloseBrackets, numOpenBrackets, numCloseParens, numOpenParens, clnum)
+  if a:line =~ '^\s*\.[^.]\+'
+    " Line starting with dot
+    if s:IsMatchingLineOrBlock(a:previousNum, '^\s*\.')
+      " Previous line is the dot line or the dot block
+      return a:previousIndent
+    elseif a:numCloseBrackets > a:numOpenBrackets || a:numCloseParens > a:numOpenParens
+      " Previous line closes the block
+      return a:previousIndent
+    else
+      return a:previousIndent + shiftwidth()
+    endif
+  elseif s:IsMatchingLineOrBlock(a:previousNum, '^\s*\.')
+    " Previous line is the dot line or the dot block
+    if a:previous =~ '^\s*\.' && s:IsCommentLine(a:clnum)
+      " Comment line just after the dot line
+      return a:previousIndent - shiftwidth()
+    else
+      let nearestNonDotLnum = s:SearchBackwardLineOrBlock(a:previousNum, '^\s*[^ \t.]')
+      return indent(nearestNonDotLnum)
+    endif
+  else
+    return -1
+  endif
 endfunction
 
 function! SwiftIndent(...)
@@ -193,17 +320,12 @@ function! SwiftIndent(...)
       let openingParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
       call cursor(line, column)
       return indent(openingParen)
-    elseif line =~ '^\s*\.' && previous !~ '^\s*\.' && numOpenParens > 0
-      return previousIndent + shiftwidth()
-    elseif previous =~ '^\s*\.'
-      if s:IsCommentLine(clnum) != 0
-        return previousIndent - shiftwidth()
-      elseif line =~ '^\s*\.'
-        return previousIndent
-      else
-        return previousIndent - shiftwidth()
-      endif
     else
+      let dotIndent = DotIndent(line, previous, previousNum, previousIndent, numCloseBrackets, numOpenBrackets, numCloseParens, numOpenParens, clnum)
+      if dotIndent != -1
+        return dotIndent
+      endif
+
       " - Current line is blank, and the user presses 'o'
       return previousIndent
     endif
@@ -273,6 +395,11 @@ function! SwiftIndent(...)
     " - Previous line has close then open braces, indent previous + 1 'sw'
     if previous =~ "}.*{"
       return previousIndent + shiftwidth()
+    endif
+
+    let dotIndent = DotIndent(line, previous, previousNum, previousIndent, numCloseBrackets, numOpenBrackets, numCloseParens, numOpenParens, clnum)
+    if dotIndent != -1
+      return dotIndent
     endif
 
     let line = line(".")
