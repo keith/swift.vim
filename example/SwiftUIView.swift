@@ -47,4 +47,78 @@ struct ExampleView: View {
     }
 }
 
-PlaygroundPage.current.setLiveView(ExampleView())
+struct ViewModifierPatternView: View {
+    var body: some View {
+        // indented modifiers
+        VStack {
+            //  second view is aligned with first view
+            Text("foo")
+                .font(.caption)
+            Text("bar")
+
+            Text("foo")
+                .font(.caption)
+            Button("bar") {
+                print("bar")
+            }
+
+            Text("foo")
+                .font(.caption)
+            Button(action: { print("bar") }) {
+                Text("bar")
+            }
+
+            Text("foo")
+                .font(
+                    .caption
+                )
+            Text("bar")
+
+            Text("foo")
+                .font(
+                    .caption
+                )
+                .padding()
+            Text("bar")
+        }
+
+        // non-indented modifiers
+        VStack {
+        }
+        .padding()
+        Text("bar")
+
+        VStack {
+        }
+        .padding()
+        Button("bar") {
+            print("bar")
+        }
+
+        VStack {
+        }
+        .padding()
+        Button(action: { print("bar") }) {
+            Text("bar")
+        }
+
+        VStack {
+        }
+        .padding(
+            .all
+        )
+        Text("bar")
+
+        Text("foo")
+            .font(
+                .caption
+            )
+            .padding()
+        Text("bar")
+    }
+}
+
+PlaygroundPage.current.setLiveView(VStack {
+                                       ViewModifierPatternView()
+                                       ExampleView()
+                                   })
