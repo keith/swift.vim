@@ -68,7 +68,7 @@ endfunction
 " Arguments:
 "   a:lnum - (number) The line number to analyze and start searching from.
 " Returns:
-"   (number) The line number of the block's start position, or the input line number if no block structure is detected. 0 if no opening parenthes or bracket found.
+"   (number) The line number of the block's start position, or the input line number if no block structure is detected. 0 if no opening parenthesis or bracket found.
 " Notes:
 "   - The cursor position is updated during execution. Ensure that the caller saves and restores the cursor position if necessary."
 function! s:CursorToBlockStart(lnum)
@@ -142,7 +142,7 @@ function! s:SearchBackwardLineOrBlock(lnum, pattern)
   return lnum
 endfunction
 
-" Description: Determines the indentation level for a lines that start with a dot.
+" Description: Determines the indentation level for a line that start with a dot.
 " Parameters:
 "   line              - (string) The content of the current line.
 "   previous          - (string) The content of the previous line.
