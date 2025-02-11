@@ -281,12 +281,7 @@ function! SwiftIndent(...)
       let numOpenParensBracketLine = s:NumberOfMatches("(", bracketLine, openingBracket)
       let numCloseParensBracketLine = s:NumberOfMatches(")", bracketLine, openingBracket)
       if numOpenParensBracketLine > numCloseParensBracketLine
-        let line = line(".")
-        let column = col(".")
-        call cursor(openingParen, column)
-        let openingParenCol = searchpairpos("(", "", ")", "bWn", "s:IsExcludedFromIndent()")[1]
-        call cursor(line, column)
-        return openingParenCol
+        return indent(openingBracket)
       endif
       if numOpenParensBracketLine == 0 && numCloseParensBracketLine == 0
         return indent(openingBracket) + shiftwidth()
@@ -309,17 +304,26 @@ function! SwiftIndent(...)
         return indent(openingParenPos[0])
       elseif numOpenParensBracketLine > numCloseParensBracketLine
         let openingParenPos = s:SearchOpeningParenPos([line("."), col(".")])
-        return openingParenPos[1]
+        return indent(openingParenPos[0])
       endif
 
       return indent(openingBracket)
     elseif line =~ '^\s*)$'
-      let line = line(".")
       let column = col(".")
-      call cursor(line, 1)
+      call cursor(clnum, 1)
       let openingParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
-      call cursor(line, column)
+      call cursor(clnum, column)
       return indent(openingParen)
+    elseif line =~ '^\s*).*'
+      let firstCloseParenCol = stridx(line, ')')
+      let openingParenPos = s:SearchOpeningParenPos([clnum, firstCloseParenCol])
+      if s:SearchOpeningParenPos(openingParenPos)[0] == 0
+        return indent(openingParenPos[0])
+      elseif getline(openingParenPos[0]) =~ '($'
+        return indent(openingParenPos[0])
+      else
+        return openingParenPos[1] - 1
+      endif
     else
       let dotIndent = DotIndent(line, previous, previousNum, previousIndent, numCloseBrackets, numOpenBrackets, numCloseParens, numOpenParens, clnum)
       if dotIndent != -1
@@ -344,9 +348,9 @@ function! SwiftIndent(...)
         endif
 
         if numCloseParens > numOpenParens
-          let line = line(".")
+          let line = previousNum
           let column = col(".")
-          call cursor(line - 1, column)
+          call cursor(line, column)
           let openingParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
           call cursor(line, column)
           return indent(openingParen)
@@ -370,7 +374,11 @@ function! SwiftIndent(...)
 
       let previousParen = match(previous, '\v\($')
       if previousParen != -1
-        return previousIndent + shiftwidth()
+        if line =~ '^\s*).*'
+          return previousIndent
+        else
+          return previousIndent + shiftwidth()
+        endif
       endif
 
       let line = line(".")
@@ -384,12 +392,8 @@ function! SwiftIndent(...)
     endif
 
     if numOpenBrackets > numCloseBrackets
-      let line = line(".")
-      let column = col(".")
-      call cursor(previousNum, column)
-      let openingParen = searchpair("(", "", ")", "bWn", "s:IsExcludedFromIndent()")
-      call cursor(line, column)
-      return openingParen + 1
+      let nearestBlockStartLnum = s:SearchBackwardLineOrBlock(previousNum, '\s*[^ \t]\+')
+      return indent(nearestBlockStartLnum) + shiftwidth()
     endif
 
     " - Previous line has close then open braces, indent previous + 1 'sw'
@@ -426,11 +430,14 @@ function! SwiftIndent(...)
 
     " The previous line opens a closure and doesn't close it
     if numOpenBrackets > numCloseBrackets
-      return previousParen + shiftwidth()
+      return previousIndent + shiftwidth()
     endif
 
     call setpos(".", savePosition)
     return previousParen
+
+    elseif line =~ '^\s*)$'
+      return previousIndent
   endif
 
   return cindent

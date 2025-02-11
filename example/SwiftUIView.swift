@@ -3,6 +3,7 @@ import PlaygroundSupport
 
 struct ExampleView: View {
     @State var isShowingSheet = false
+    @State var isShowingSheet2 = false
 
     var body: some View {
         VStack {
@@ -38,11 +39,23 @@ struct ExampleView: View {
                     }
                 }
             }
+            Button(action: {
+                print("clicked")
+                isShowingSheet2 = true
+            }) {
+                Text("click me")
+            }
+            .buttonStyle(.bordered)
         }
         .padding(12)
         .frame(width: 200, height: 400)
         .sheet(isPresented: $isShowingSheet) {
             Text("sheet")
+        }
+        .sheet(isPresented: Binding(get: { isShowingSheet2 },
+                                    set: { v in isShowingSheet2 = v }
+                                   )) {
+            Text("sheet2")
         }
     }
 }
@@ -119,6 +132,6 @@ struct ViewModifierPatternView: View {
 }
 
 PlaygroundPage.current.setLiveView(VStack {
-                                       ViewModifierPatternView()
-                                       ExampleView()
-                                   })
+    ViewModifierPatternView()
+    ExampleView()
+})
