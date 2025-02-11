@@ -353,10 +353,10 @@ let data = NSData(contentsOfFile: path) else
 }
 
 UIView.animateWithDuration(duration, delay: 0, usingSpringWithDamping: 0.8, initialSpringVelocity: 0, options: .CurveEaseInOut, animations: {
-                               view.backgroundColor = UIColor.redColor()
-                           }, completion: { finished in
-                               print("indent?")
-                           })
+    view.backgroundColor = UIColor.redColor()
+}, completion: { finished in
+    print("indent?")
+})
 
 // Indent last line should hold
 self.init(className: "Item", dictionary: [
@@ -378,11 +378,11 @@ public func find(closure: @noescape Element throws -> Bool) rethrows -> Element?
 }
 
 UIView.animate(withDuration: 0.2, animations: {
-                   self.foo.alpha = 1.0
-                   self.bar.alpha = 1.0
-               }, completion: { _ in
-                   completion()
-               })
+    self.foo.alpha = 1.0
+    self.bar.alpha = 1.0
+}, completion: { _ in
+    completion()
+})
 
 A.b().application(
     application, didFinishLaunchingWithOptions: launchOptions)
@@ -397,26 +397,48 @@ struct Foo {
     }
     func caller1() {
         callee(delegate1: {
-                   print("caller1 delegate1")
-               }) {
-                   print("caller1 delegate2")
+            print("caller1 delegate1")
+        }) {
+            print("caller1 delegate2")
         }
     }
     func caller2() {
         callee(delegate1: {
-                   print("caller1 delegate1")
-               }, delegate2: {
-                   print("caller1 delegate2")
-               })
+            print("caller1 delegate1")
+        }, delegate2: {
+            print("caller1 delegate2")
+        })
     }
     func caller3() {
         callee(delegate1: {
-                   print("caller1 delegate1")
-               }, delegate2: {
-                   print([0, 1].map {
-                             $0 + 1
-                         })
-                   print("caller1 delegate2")
-               })
+            print("caller1 delegate1")
+        }, delegate2: {
+            print([0, 1].map {
+                $0 + 1
+            })
+            print("caller1 delegate2")
+        })
     }
 }
+
+struct Bar {
+    func f(title: String, delegate: (Int) -> Void) {
+        print(title)
+        delegate(42)
+    }
+}
+
+Bar().f(
+    title: "the title"
+) { n in
+    print("n")
+}
+
+func createDelegate() -> ((Int) -> Void) {
+    return { n in
+        print("n")
+    }
+}
+
+Bar().f(title: "the title", delegate: createDelegate(
+))
