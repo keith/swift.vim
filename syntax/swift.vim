@@ -17,9 +17,20 @@ syntax keyword swiftMarker contained MARK
 " In comment identifiers
 function! s:CommentKeywordMatch(keyword)
   execute "syntax match swiftDocString \"\\v^\\s*-\\s*". a:keyword . "\\W\"hs=s+1,he=e-1 contained"
+  " Same as above but in lines that start with /// or * (in /*...*/ comments)
+  execute "syntax match swiftDocString \"\\v(^\\s*(\\/\\/\\/|\\*)?\\s*-\\s*)@<=". a:keyword ."\\W\"he=e-1 contained"
 endfunction
 
 syntax case ignore
+
+" Match parameters in strings like ` - parameter foo: definiton`
+syntax match swiftDocStringParam "\v(^\s*(\/\/\/|\*)?\s*-\s*parameter\s*)@<=\w+" contained
+" Match the parameter in lines like ' - param foo: definiton'. This is useful when
+" ' - Parameters:' is used in the doc string, with each parameter on a new
+" line
+syntax match swiftDocStringParam "\v(^\s*(\/\/\/|\*)?\s*-\s)@<=\w+:"he=e-1 contained
+" Match inline code in comments
+syntax region swiftDocStringInlineCode start=/`/hs=e+1 end=/`/he=s-1 contained
 
 call s:CommentKeywordMatch("attention")
 call s:CommentKeywordMatch("author")
@@ -33,6 +44,7 @@ call s:CommentKeywordMatch("important")
 call s:CommentKeywordMatch("invariant")
 call s:CommentKeywordMatch("note")
 call s:CommentKeywordMatch("parameter")
+call s:CommentKeywordMatch("parameters")
 call s:CommentKeywordMatch("postcondition")
 call s:CommentKeywordMatch("precondition")
 call s:CommentKeywordMatch("remark")
@@ -308,14 +320,16 @@ syntax keyword swiftPreprocessor
 
 " Comment patterns
 syntax match swiftComment "\v\/\/.*$"
-      \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell oneline
+      \ contains=swiftTodos,swiftDocString,swiftDocStringParam,swiftDocStringInlineCode,swiftMarker,@Spell oneline
 syntax region swiftComment start="/\*" end="\*/"
-      \ contains=swiftTodos,swiftDocString,swiftMarker,@Spell fold
+      \ contains=swiftTodos,swiftDocString,swiftDocStringParam,swiftDocStringInlineCode,swiftMarker,@Spell fold
 
 
 " Set highlights
 highlight default link swiftTodos Todo
 highlight default link swiftDocString String
+highlight default link swiftDocStringParam SpecialComment
+highlight default link swiftDocStringInlineCode SpecialComment
 highlight default link swiftShebang Comment
 highlight default link swiftComment Comment
 highlight default link swiftMarker Comment
